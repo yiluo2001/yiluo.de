@@ -1,23 +1,657 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yiluo • Portfolio</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yi Luo — Personal Site</title>
+  <meta name="description" content="Personal website for Yi Luo: education, experience, projects, and contact." />
+  <style>
+    :root{
+      --bg: #f1f3f7;            /* desk/background */
+      --ink: #0f172a;           /* text */
+      --muted: #64748b;         /* faded text */
+      --brand: #0ea5e9;         /* accents */
+      --paper: #fff;            /* sheet */
+      --rule: #e2e8f0;          /* dividers */
+    }
+
+    /* Background that suggests an endless workspace */
+    html, body{
+      height: 100%;
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+    }
+
+    /* The A4-style sheet — but scrollable (endless) */
+    .sheet{
+      box-sizing: border-box;
+      width: min(860px, calc(100vw - 2rem));
+      /* Remove aspect-ratio so height auto-expands with content */
+      min-height: 100vh;        /* feel like an endless page */
+      margin: 0 auto 2.5rem;
+      padding: clamp(1.25rem, 2.5vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
+      background: var(--paper);
+      border-radius: 12px;
+      box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.10),
+        0 2px 8px rgba(15, 23, 42, 0.06);
+      position: relative;
+      overflow: visible; /* allow content to grow beyond initial fold */
+    }
+
+    /* Top identity block */
+    header{
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 1.25rem;
+      align-items: center;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 1rem;
+    }
+
+    h1{
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      margin: 0 0 .35rem 0;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* Picture */
+    .avatar{
+      width: 180px;
+      height: 220px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #e5e7eb;
+      border: 1px solid var(--rule);
+    }
+
+    /* Quick links row */
+    .links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 1rem;
+      margin-top: .8rem;
+      font-size: .98rem;
+    }
+    .links a{
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: .35rem .65rem;
+      border-radius: 999px;
+    }
+    .links a:hover{
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+
+    /* Sections */
+    section{ margin: 1.25rem 0 0; }
+    section + section{ margin-top: 1.5rem; }
+
+    h2{
+      font-size: 1.1rem;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      color: #0b1220;
+      margin: 0 0 .75rem 0;
+    }
+
+    .item{
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 1rem 1.25rem;
+      padding: .9rem 0;
+      border-top: 1px dashed var(--rule);
+    }
+    .item:first-child{ border-top: 0; padding-top: 0; }
+
+    .when{ color: var(--muted); font-size: .95rem; white-space: nowrap; }
+    .what{ }
+    .what h3{ margin: 0 0 .25rem 0; font-size: 1.05rem; }
+    .what .where{ color: var(--muted); margin-bottom: .35rem; font-size: .97rem; }
+    .what p{ margin: .3rem 0; }
+
+    /* Two-column list for skills & languages */
+    .cols{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 1rem 2rem;
+    }
+
+    ul{ padding-left: 1.1rem; margin: .25rem 0 .25rem 0; }
+    li{ margin: .2rem 0; }
+
+    /* Floating print/download button */
+    .print-btn{
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: .55rem .9rem;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: 0 6px 16px rgba(15,23,42,.12);
+    }
+    .print-btn:hover{ color: var(--brand); border-color: var(--brand); }
+
+    /* Print rules: real A4 and remove background */
+    @page { size: A4; margin: 14mm; }
+    @media print{
+      body{ background: none; }
+      .sheet{ box-shadow: none; border-radius: 0; margin: 0; width: auto; padding: 0; }
+      header{ border: 0; padding-bottom: .25rem; }
+      .print-btn{ display: none; }
+    }
+
+    /* Tiny screens */
+    @media (max-width: 640px){
+      header{ grid-template-columns: 1fr; }
+      .item{ grid-template-columns: 1fr; }
+      .when{ order: -1; }
+    }
+      /* Language switcher */
+    .lang-switch{
+      position: fixed;
+      top: .75rem; right: .75rem;
+      display: flex; gap: .4rem;
+      z-index: 50;
+    }
+    .lang-switch button{
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      cursor: pointer;
+    }
+    .lang-switch button[aria-pressed="true"]{ border-color: var(--brand); color: var(--brand); }
+
+    /* Multi-language sheets */
+    .sheet{ display: none; }
+    .sheet.active{ display: block; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Hi, I’m Yiluo</h1>
-    <p>Computer-science graduate. Here are a few projects 👇</p>
-  </header>
-
-  <nav>
-    <ul>
-      <li><a href="/a">Project A</a></li>
-      <li><a href="/b">Project B</a></li>
-      <li><a href="/c">Project C</a></li>
-    </ul>
+  <nav class="lang-switch" aria-label="Language selector">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="de" aria-pressed="false">DE</button>
+    <button data-lang="se" aria-pressed="false">SE</button>
   </nav>
+
+  <!-- ENGLISH -->
+  <main class="sheet active" role="document" data-lang="en">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Print or save as PDF">Print / Save PDF</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Computer Science (B.Sc.) — Stockholm University</p>
+        <div class="links" aria-label="Quick links">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Portrait of Yi Luo" />
+    </header>
+
+    <section id="education-en">
+      <h2>Education</h2>
+      <div class="item">
+        <div class="when">2025.09 – present</div>
+        <div class="what">
+          <h3>Stockholm University — Computer Science B.Sc.</h3>
+          <p class="where">Expected Graduation: June 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lund University; Stuttgart/Hamburg University; Goethe-Institut</h3>
+          <p class="where">German and Swedish courses</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — Computer Science B.Sc.</h3>
+          <p class="where">150 ECTS completed · GPA 11.7/12.0</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Overall grade 90.625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-en">
+      <h2>Work Experience</h2>
+      <div class="item">
+        <div class="when">2023.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">COMPSCI 2DB3 – Databases</p>
+          <p>Led tutorials and labs; held office hours and responded to student emails; graded assignments and managed marks; prepared materials and coordinated with instructors; proctored exams.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.01 – 2022.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">SFWRENG 2C03 – Data Structures and Algorithms</p>
+          <p>Supported learning through labs, tutorials, grading, and student consultation.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2021.01 – 2021.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">COMPSCI 1XC3 – Practice & Experience: Development Basics</p>
+          <p>Assisted with lectures, labs, grading, and course operations.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Volunteer) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Calculus and Vectors</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills-en">
+      <h2>Technical Skills</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programming</h3>
+          <ul>
+            <li>Python, Java, Haskell, C, SQL</li>
+          </ul>
+          <h3 class="where">Web</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Tools & Technologies</h3>
+          <ul>
+            <li>Git, UNIX Shell Scripting, MATLAB, LaTeX</li>
+          </ul>
+          <h3 class="where">Productivity & OS</h3>
+          <ul>
+            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-en">
+      <h2>Projects</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku Solver</h3>
+          <p class="where">Python</p>
+          <p>Implemented a backtracking algorithm to efficiently solve Sudoku puzzles.</p>
+          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">See more on GitHub</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-en">
+      <h2>Awards</h2>
+      <ul>
+        <li>McMaster University Dean’s Honour List — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 School Champion, Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-en">
+      <h2>Languages</h2>
+      <ul>
+        <li>Swedish — Swedish higher education proficiency (2024-05-31)</li>
+        <li>German — TestDaF Level 4 in all components (2023-07-14)</li>
+        <li>English — IELTS 7.0 (2018-11-03)</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Built with semantic HTML and print‑ready A4 styling.</p>
+    </section>
+  </main>
+
+  <!-- DEUTSCH -->
+  <main class="sheet" role="document" data-lang="de">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Drucken oder als PDF speichern">Drucken / als PDF speichern</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Informatik (B.Sc.) — Universität Stockholm</p>
+        <div class="links" aria-label="Schnellzugriffe">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Porträt von Yi Luo" />
+    </header>
+
+    <section id="education-de">
+      <h2>Ausbildung</h2>
+      <div class="item">
+        <div class="when">2025.09 – heute</div>
+        <div class="what">
+          <h3>Universität Stockholm — B.Sc. Informatik</h3>
+          <p class="where">Voraussichtlicher Abschluss: Juni 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Universität Lund; Universität Stuttgart/Hamburg; Goethe‑Institut</h3>
+          <p class="where">Deutsch‑ und Schwedischkurse</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — B.Sc. Informatik</h3>
+          <p class="where">150 ECTS absolviert · GPA 11,7/12,0</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Gesamtnote 90,625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-de">
+      <h2>Berufserfahrung</h2>
+      <div class="item">
+        <div class="when">2023.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">COMPSCI 2DB3 – Datenbanken</p>
+          <p>Leitete Tutorien und Praktika; Sprechstunden und E‑Mail‑Support für Studierende; Bewertung und Notenverwaltung; Materialvorbereitung und Abstimmung mit Dozierenden; Aufsicht bei Prüfungen.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.01 – 2022.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">SFWRENG 2C03 – Datenstrukturen und Algorithmen</p>
+          <p>Lernunterstützung durch Praktika, Tutorien, Korrektur und Beratung.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2021.01 – 2021.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">COMPSCI 1XC3 – Praxis & Grundlagen der Entwicklung</p>
+          <p>Mitarbeit bei Vorlesungen und Praktika, Bewertung und Kursorganisation.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Ehrenamt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Analysis und Vektoren</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills-de">
+      <h2>Technische Fähigkeiten</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmierung</h3>
+          <ul>
+            <li>Python, Java, Haskell, C, SQL</li>
+          </ul>
+          <h3 class="where">Web</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Tools & Technologien</h3>
+          <ul>
+            <li>Git, UNIX‑Shell‑Skripte, MATLAB, LaTeX</li>
+          </ul>
+          <h3 class="where">Produktivität & Betriebssysteme</h3>
+          <ul>
+            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-de">
+      <h2>Projekte</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku‑Solver</h3>
+          <p class="where">Python</p>
+          <p>Backtracking‑Algorithmus zur effizienten Lösung von Sudoku‑Rätseln implementiert.</p>
+          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">Mehr auf GitHub</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-de">
+      <h2>Auszeichnungen</h2>
+      <ul>
+        <li>Dean’s Honour List der McMaster University — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Schulchampion, Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-de">
+      <h2>Sprachen</h2>
+      <ul>
+        <li>Schwedisch — Hochschulzugangs‑Sprachnachweis (2024‑05‑31)</li>
+        <li>Deutsch — TestDaF Stufe 4 in allen Teilbereichen (2023‑07‑14)</li>
+        <li>Englisch — IELTS 7,0 (2018‑11‑03)</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Erstellt mit semantischem HTML und druckfertigem A4‑Layout.</p>
+    </section>
+  </main>
+
+  <!-- SVENSKA -->
+  <main class="sheet" role="document" data-lang="se">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Skriv ut eller spara som PDF">Skriv ut / Spara som PDF</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Datavetenskap (Kand.) — Stockholms universitet</p>
+        <div class="links" aria-label="Snabblänkar">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Porträtt av Yi Luo" />
+    </header>
+
+    <section id="education-se">
+      <h2>Utbildning</h2>
+      <div class="item">
+        <div class="when">2025.09 – nu</div>
+        <div class="what">
+          <h3>Stockholms universitet — Kandidatexamen i datavetenskap</h3>
+          <p class="where">Beräknad examen: juni 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lunds universitet; Universitetet i Stuttgart/Hamburg; Goethe‑Institut</h3>
+          <p class="where">Kurser i tyska och svenska</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — Kandidatexamen i datavetenskap</h3>
+          <p class="where">150 hp genomförda · GPA 11,7/12,0</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Slutbetyg 90,625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-se">
+      <h2>Arbetslivserfarenhet</h2>
+      <div class="item">
+        <div class="when">2023.01 – 2023.04</div>
+        <div class="what">
+          <h3>Lärarassistent — McMaster University</h3>
+          <p class="where">COMPSCI 2DB3 – Databaser</p>
+          <p>Höll handledningar och labbar; mottagningstider och e‑poststöd; rättning och betyg; materialförberedelse och samordning med lärare; tentamensvakt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.01 – 2022.04</div>
+        <div class="what">
+          <h3>Lärarassistent — McMaster University</h3>
+          <p class="where">SFWRENG 2C03 – Datastrukturer och algoritmer</p>
+          <p>Stöd för lärande via labbar, handledningar, rättning och studentkontakt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2021.01 – 2021.04</div>
+        <div class="what">
+          <h3>Lärarassistent — McMaster University</h3>
+          <p class="where">COMPSCI 1XC3 – Praktik & erfarenhet: utvecklingsgrunder</p>
+          <p>Assisterade i föreläsningar och labbar, rättning och kursdrift.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Lärarassistent (ideellt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Kalkyl och vektorer</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills-se">
+      <h2>Tekniska färdigheter</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmering</h3>
+          <ul>
+            <li>Python, Java, Haskell, C, SQL</li>
+          </ul>
+          <h3 class="where">Webb</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Verktyg & tekniker</h3>
+          <ul>
+            <li>Git, UNIX‑skalskript, MATLAB, LaTeX</li>
+          </ul>
+          <h3 class="where">Produktivitet & OS</h3>
+          <ul>
+            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-se">
+      <h2>Projekt</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku‑lösare</h3>
+          <p class="where">Python</p>
+          <p>Implementerade en backtracking‑algoritm för att effektivt lösa Sudoku.</p>
+          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">Se mer på GitHub</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-se">
+      <h2>Utmärkelser</h2>
+      <ul>
+        <li>McMaster University Dean’s Honour List — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Skolmästare, Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-se">
+      <h2>Språk</h2>
+      <ul>
+        <li>Svenska — behörighet för högskolestudier (2024‑05‑31)</li>
+        <li>Tyska — TestDaF nivå 4 i alla delar (2023‑07‑14)</li>
+        <li>Engelska — IELTS 7,0 (2018‑11‑03)</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Byggd med semantiskt HTML och utskriftsvänlig A4‑stil.</p>
+    </section>
+  </main>
+
+  <script>
+    // Year stamps
+    document.querySelectorAll('.year').forEach(el=> el.textContent = new Date().getFullYear());
+
+    // Language switching with localStorage + URL hash support
+    const buttons = document.querySelectorAll('.lang-switch button');
+    const sheets = document.querySelectorAll('.sheet');
+
+    function activate(lang){
+      sheets.forEach(s=> s.classList.toggle('active', s.dataset.lang === lang));
+      buttons.forEach(b=> b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+      localStorage.setItem('lang', lang);
+      const url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      history.replaceState(null, '', url);
+    }
+
+    // Init: pick from ?lang= or localStorage or browser language
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get('lang');
+    const fromStore = localStorage.getItem('lang');
+    const browserGuess = (navigator.language||'en').slice(0,2).toLowerCase();
+    const supported = ['en','de','se'];
+    const initial = supported.includes((fromUrl||'').toLowerCase()) ? fromUrl.toLowerCase()
+                   : supported.includes((fromStore||'').toLowerCase()) ? fromStore.toLowerCase()
+                   : (browserGuess === 'sv' ? 'se' : supported.includes(browserGuess) ? browserGuess : 'en');
+    activate(initial);
+
+    buttons.forEach(b=> b.addEventListener('click', ()=> activate(b.dataset.lang)));
+  </script>
 </body>
 </html>

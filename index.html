@@ -144,6 +144,7 @@
       text-decoration: none;
       color: var(--ink);
       box-shadow: 0 6px 16px rgba(15,23,42,.12);
+      z-index: 40;
     }
     .print-btn:hover{ color: var(--brand); border-color: var(--brand); }
 
@@ -154,6 +155,8 @@
       .sheet{ box-shadow: none; border-radius: 0; margin: 0; width: auto; padding: 0; }
       header{ border: 0; padding-bottom: .25rem; }
       .print-btn{ display: none; }
+      .site-nav{ display: none; }
+      .lang-switch{ display: none; }
     }
 
     /* Tiny screens */
@@ -161,8 +164,12 @@
       header{ grid-template-columns: 1fr; }
       .item{ grid-template-columns: 1fr; }
       .when{ order: -1; }
+      /* Keep nav visible on mobile; remove if you want them hidden:
+      .site-nav{ display:none; }
+      */
     }
-      /* Language switcher */
+
+    /* Language switcher */
     .lang-switch{
       position: fixed;
       top: .75rem; right: .75rem;
@@ -182,9 +189,41 @@
     /* Multi-language sheets */
     .sheet{ display: none; }
     .sheet.active{ display: block; }
+
+    /* TOP-LEFT SITE NAV */
+    .site-nav{
+      position: fixed;
+      top: .75rem;
+      left: .75rem;
+      display: flex;
+      gap: .5rem;
+      z-index: 60;
+    }
+    .site-nav a{
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: var(--paper);
+      font-size: .9rem;
+      box-shadow: 0 4px 12px rgba(15,23,42,.12);
+      transition: border-color .2s ease-in-out, color .2s ease-in-out, transform .15s ease-in-out;
+    }
+    .site-nav a:hover{
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
+  <!-- Top-left navigation buttons -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="https://www.yiluo.de">Home</a>
+    <a href="https://www.yiluo.de/famtree">Family Tree</a>
+  </nav>
+
   <nav class="lang-switch" aria-label="Language selector">
     <button data-lang="en" aria-pressed="true">EN</button>
     <button data-lang="de" aria-pressed="false">DE</button>
@@ -208,32 +247,119 @@
       <img class="avatar" src="photo.jpg" alt="Portrait of Yi Luo" />
     </header>
 
-    
     <section id="summary-en">
-      <h2>Summary</h2>
-      <p>Computer Science student with strong academic record (GPA 11.7/12) and 150+ ECTS completed. Experienced teaching assistant with hands-on programming and web development experience. Skilled in Python, Java, C++, and full-stack development. Multilingual with international education experience across Canada, Germany, and Sweden.</p>
+      <h2>Profile</h2>
+      <p>Computer Science student with a strong programming foundation and hands-on experience in Python, Java, and C++. Built multiple software and web projects demonstrating problem-solving and algorithmic thinking. Skilled teaching assistant with strong communication and debugging skills. Seeking a software engineering internship to apply academic knowledge in a practical environment.</p>
     </section>
-<section id="education-en">
+
+    <section id="skills-en">
+      <h2>Technical Skills</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Languages</h3>
+          <ul>
+            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+          </ul>
+          <h3 class="where">Web</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+          <h3 class="where">Concepts</h3>
+          <ul>
+            <li>Data Structures, Algorithms, Databases, OOP</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Tools &amp; Frameworks</h3>
+          <ul>
+            <li>Git, UNIX Shell, LaTeX, MATLAB</li>
+          </ul>
+          <h3 class="where">Operating Systems</h3>
+          <ul>
+            <li>Windows, macOS, Linux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-en">
+      <h2>Projects</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Personal Portfolio Website</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Designed and developed a responsive multilingual personal website. Implemented print-ready A4 export layout and dynamic language switching. Deployed via GitHub Pages to showcase portfolio and projects.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Developed an interactive web application to create and visualize dynamic family trees. Implemented features for adding people, linking parent–child relationships, and defining couples or siblings. Designed a responsive, user-friendly interface with real-time updates using DOM manipulation and JavaScript data structures.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048 Game</h3>
+          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Built complete game logic using object-oriented design and MVC architecture. Implemented JUnit tests to ensure correctness and maintainable code structure.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku Solver</h3>
+          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Implemented a backtracking algorithm for solving Sudoku puzzles efficiently. Designed a console-based user interface and validated edge cases through testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-en">
+      <h2>Work Experience</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">Hamilton, ON, Canada</p>
+          <p>Assisted in three computer science courses: COMPSCI 2DB3 (Databases), SFWRENG 2C03 (Data Structures and Algorithms), and COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Led tutorials and lab sessions for 50+ students; supported debugging and algorithm design. Improved course materials and grading scripts to enhance student learning efficiency. Provided academic mentoring through office hours and email support.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Volunteer) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Calculus and Vectors</p>
+          <p>Supported instruction and peer tutoring in Calculus and Vectors for senior students.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-en">
       <h2>Education</h2>
       <div class="item">
         <div class="when">2025.09 – present</div>
         <div class="what">
-          <h3>Stockholm University — Computer Science B.Sc.</h3>
+          <h3>Stockholm University — B.Sc. Computer Science</h3>
           <p class="where">Expected Graduation: June 2026</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2022.03 – 2025.08</div>
-        <div class="what">
-          <h3>Lund University; Stuttgart/Hamburg University; Goethe-Institut</h3>
-          <p class="where">German and Swedish courses</p>
         </div>
       </div>
       <div class="item">
         <div class="when">2019.09 – 2022.01</div>
         <div class="what">
           <h3>McMaster University — Computer Science B.Sc.</h3>
-          <p class="where">150 ECTS completed · GPA 11.7/12.0</p>
+          <p class="where">150 ECTS completed · GPA 11.7/12.0 · Hamilton, ON, Canada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lund University / Stuttgart University / Goethe-Institut</h3>
+          <p class="where">German and Swedish language studies</p>
         </div>
       </div>
       <div class="item">
@@ -245,127 +371,26 @@
       </div>
     </section>
 
-    <section id="experience-en">
-      <h2>Work Experience</h2>
-      <div class="item">
-        <div class="when">2023.01 – 2023.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">COMPSCI 2DB3 – Databases</p>
-          <p>Led tutorials and labs; held office hours and responded to student emails; graded assignments and managed marks; prepared materials and coordinated with instructors; proctored exams.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2022.01 – 2022.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">SFWRENG 2C03 – Data Structures and Algorithms</p>
-          <p>Supported learning through labs, tutorials, grading, and student consultation.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2021.01 – 2021.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">COMPSCI 1XC3 – Practice & Experience: Development Basics</p>
-          <p>Assisted with lectures, labs, grading, and course operations.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2018.11 – 2019.02</div>
-        <div class="what">
-          <h3>Teaching Assistant (Volunteer) — Blyth Academy Mississauga</h3>
-          <p class="where">MCV4U – Calculus and Vectors</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills-en">
-      <h2>Technical Skills</h2>
-      <div class="cols">
-        <div>
-          <h3 class="where">Programming</h3>
-          <ul>
-            <li>Python, Java, C, C++, Haskell, SQL</li>
-          </ul>
-          <h3 class="where">Web</h3>
-          <ul>
-            <li>HTML, CSS, JavaScript</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="where">Tools & Technologies</h3>
-          <ul>
-            <li>Git, UNIX Shell Scripting, MATLAB, LaTeX</li>
-          </ul>
-          <h3 class="where">Productivity & OS</h3>
-          <ul>
-            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    
-    <section id="projects-en">
-      <h2>Projects</h2>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Personal Website</h3>
-          <p class="where">HTML, CSS, JavaScript</p>
-          <p>Designed and built a multilingual, responsive portfolio with print‑ready A4 layout and language switching.</p>
-          <p><a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Sudoku Solver</h3>
-          <p class="where">Python</p>
-          <p>Implemented a backtracking algorithm to efficiently solve Sudoku puzzles.</p>
-          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">See more on GitHub</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048 Game</h3>
-          <p class="where">C++</p>
-          <p>Developed complete game logic including tile merging, movement, and random generation using OOP principles.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048 Game</h3>
-          <p class="where">Java, MVC</p>
-          <p>Built a Java version of 2048 with Model‑View‑Controller architecture and JUnit tests for logic validation.</p>
-        </div>
-      </div>
-    </section>
-
-
     <section id="awards-en">
       <h2>Awards</h2>
       <ul>
         <li>McMaster University Dean’s Honour List — 2020, 2021</li>
         <li>Ontario Scholar — 2019</li>
-        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 School Champion, Certificate of Distinction</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 School Champion &amp; Certificate of Distinction</li>
       </ul>
     </section>
 
     <section id="languages-en">
       <h2>Languages</h2>
       <ul>
-        <li>Swedish — Swedish higher education proficiency (2024-05-31)</li>
-        <li>German — TestDaF Level 4 in all components (2023-07-14)</li>
-        <li>English — IELTS 7.0 (2018-11-03)</li>
+        <li>English — C1 (IELTS 7.0)</li>
+        <li>German — C1 (TestDaF Level 4)</li>
+        <li>Swedish — C1 Proficiency</li>
       </ul>
     </section>
 
     <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
-      <p>© <span class="year"></span> Yi Luo. Built with semantic HTML and print‑ready A4 styling.</p>
+      <p>© <span class="year"></span> Yi Luo. Built with semantic HTML and print-ready A4 styling.</p>
     </section>
   </main>
 
@@ -386,12 +411,99 @@
       <img class="avatar" src="photo.jpg" alt="Porträt von Yi Luo" />
     </header>
 
-    
     <section id="summary-de">
       <h2>Profil</h2>
-      <p>Informatikstudent mit starkem akademischem Profil (GPA 11,7/12) und 150+ ECTS. Erfahrung als Teaching Assistant sowie praktische Programmier‑ und Webentwicklungserfahrung. Sicher in Python, Java, C++ und Full‑Stack‑Entwicklung. Mehrsprachig mit internationaler Ausbildungserfahrung in Kanada, Deutschland und Schweden.</p>
+      <p>Informatikstudent mit solider Programmiergrundlage und praktischer Erfahrung in Python, Java und C++. Entwicklung mehrerer Software- und Webprojekte mit Fokus auf Problemlösung und algorithmischem Denken. Erfahrene Teaching Assistant mit ausgeprägten Kommunikations- und Debugging-Fähigkeiten. Auf der Suche nach einem Praktikum in der Softwareentwicklung, um akademisches Wissen in der Praxis anzuwenden.</p>
     </section>
-<section id="education-de">
+
+    <section id="skills-de">
+      <h2>Technische Fähigkeiten</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmiersprachen</h3>
+          <ul>
+            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+          </ul>
+          <h3 class="where">Web</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+          <h3 class="where">Konzepte</h3>
+          <ul>
+            <li>Datenstrukturen, Algorithmen, Datenbanken, OOP</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Tools &amp; Frameworks</h3>
+          <ul>
+            <li>Git, UNIX-Shell, LaTeX, MATLAB</li>
+          </ul>
+          <h3 class="where">Betriebssysteme</h3>
+          <ul>
+            <li>Windows, macOS, Linux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-de">
+      <h2>Projekte</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Persönliche Portfolio-Website</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Responsiv, mehrsprachige persönliche Webseite entworfen und entwickelt. Druckfertiges A4-Layout sowie dynamische Sprachumschaltung implementiert. Über GitHub Pages zur Präsentation des Portfolios und der Projekte bereitgestellt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Interaktive Webanwendung zur Erstellung und Visualisierung dynamischer Familienstammbäume entwickelt. Funktionen zum Hinzufügen von Personen, Verknüpfen von Eltern-Kind-Beziehungen sowie Definieren von Paaren und Geschwistern implementiert. Responsives, benutzerfreundliches Interface mit Echtzeitaktualisierung durch DOM-Manipulation und JavaScript-Datenstrukturen gestaltet.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048-Spiel</h3>
+          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Komplette Spiellogik mit objektorientiertem Design und MVC-Architektur umgesetzt. JUnit-Tests zur Sicherstellung der Korrektheit und Wartbarkeit geschrieben.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku-Solver</h3>
+          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Backtracking-Algorithmus zur effizienten Lösung von Sudoku-Rätseln implementiert. Konsolenbasiertes Interface erstellt und Randfälle durch Tests validiert.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-de">
+      <h2>Berufserfahrung</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">Hamilton, ON, Kanada</p>
+          <p>Mitarbeit in drei Informatikveranstaltungen: COMPSCI 2DB3 (Datenbanken), SFWRENG 2C03 (Datenstrukturen und Algorithmen) und COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Leitete Tutorien und Praktika für über 50 Studierende; Unterstützung beim Debugging und bei der Entwicklung von Algorithmen. Kursmaterialien und Bewertungsskripte zur Steigerung der Lerneffizienz verbessert. Fachliche Betreuung über Sprechstunden und E-Mail-Support.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Ehrenamt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Analysis und Vektoren</p>
+          <p>Unterstützung des Unterrichts und Peer-Tutoring in Analysis und Vektoren für Oberstufenschüler.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-de">
       <h2>Ausbildung</h2>
       <div class="item">
         <div class="when">2025.09 – heute</div>
@@ -401,17 +513,17 @@
         </div>
       </div>
       <div class="item">
-        <div class="when">2022.03 – 2025.08</div>
-        <div class="what">
-          <h3>Universität Lund; Universität Stuttgart/Hamburg; Goethe‑Institut</h3>
-          <p class="where">Deutsch‑ und Schwedischkurse</p>
-        </div>
-      </div>
-      <div class="item">
         <div class="when">2019.09 – 2022.01</div>
         <div class="what">
           <h3>McMaster University — B.Sc. Informatik</h3>
-          <p class="where">150 ECTS absolviert · GPA 11,7/12,0</p>
+          <p class="where">150 ECTS absolviert · GPA 11,7/12,0 · Hamilton, ON, Kanada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Universität Lund / Universität Stuttgart / Goethe-Institut</h3>
+          <p class="where">Deutsch- und Schwedisch-Sprachstudien</p>
         </div>
       </div>
       <div class="item">
@@ -423,127 +535,26 @@
       </div>
     </section>
 
-    <section id="experience-de">
-      <h2>Berufserfahrung</h2>
-      <div class="item">
-        <div class="when">2023.01 – 2023.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">COMPSCI 2DB3 – Datenbanken</p>
-          <p>Leitete Tutorien und Praktika; Sprechstunden und E‑Mail‑Support für Studierende; Bewertung und Notenverwaltung; Materialvorbereitung und Abstimmung mit Dozierenden; Aufsicht bei Prüfungen.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2022.01 – 2022.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">SFWRENG 2C03 – Datenstrukturen und Algorithmen</p>
-          <p>Lernunterstützung durch Praktika, Tutorien, Korrektur und Beratung.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2021.01 – 2021.04</div>
-        <div class="what">
-          <h3>Teaching Assistant — McMaster University</h3>
-          <p class="where">COMPSCI 1XC3 – Praxis & Grundlagen der Entwicklung</p>
-          <p>Mitarbeit bei Vorlesungen und Praktika, Bewertung und Kursorganisation.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2018.11 – 2019.02</div>
-        <div class="what">
-          <h3>Teaching Assistant (Ehrenamt) — Blyth Academy Mississauga</h3>
-          <p class="where">MCV4U – Analysis und Vektoren</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills-de">
-      <h2>Technische Fähigkeiten</h2>
-      <div class="cols">
-        <div>
-          <h3 class="where">Programmierung</h3>
-          <ul>
-            <li>Python, Java, C, C++, Haskell, SQL</li>
-          </ul>
-          <h3 class="where">Web</h3>
-          <ul>
-            <li>HTML, CSS, JavaScript</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="where">Tools & Technologien</h3>
-          <ul>
-            <li>Git, UNIX‑Shell‑Skripte, MATLAB, LaTeX</li>
-          </ul>
-          <h3 class="where">Produktivität & Betriebssysteme</h3>
-          <ul>
-            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    
-    <section id="projects-de">
-      <h2>Projekte</h2>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Persönliche Website</h3>
-          <p class="where">HTML, CSS, JavaScript</p>
-          <p>Mehrsprachiges, responsives Portfolio mit druckfertigem A4‑Layout und Sprachumschaltung entwickelt.</p>
-          <p><a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Sudoku‑Solver</h3>
-          <p class="where">Python</p>
-          <p>Backtracking‑Algorithmus zur effizienten Lösung von Sudoku‑Rätseln implementiert.</p>
-          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">Mehr auf GitHub</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048‑Spiel</h3>
-          <p class="where">C++</p>
-          <p>Komplette Spiellogik mit Kachel‑Merge, Bewegung und Zufallsgenerierung nach OOP‑Prinzipien entwickelt.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048‑Spiel</h3>
-          <p class="where">Java, MVC</p>
-          <p>Java‑Version von 2048 mit Model‑View‑Controller‑Architektur und JUnit‑Tests für die Logik erstellt.</p>
-        </div>
-      </div>
-    </section>
-
-
     <section id="awards-de">
       <h2>Auszeichnungen</h2>
       <ul>
         <li>Dean’s Honour List der McMaster University — 2020, 2021</li>
         <li>Ontario Scholar — 2019</li>
-        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Schulchampion, Certificate of Distinction</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Schulchampion &amp; Certificate of Distinction</li>
       </ul>
     </section>
 
     <section id="languages-de">
       <h2>Sprachen</h2>
       <ul>
-        <li>Schwedisch — Hochschulzugangs‑Sprachnachweis (2024‑05‑31)</li>
-        <li>Deutsch — TestDaF Stufe 4 in allen Teilbereichen (2023‑07‑14)</li>
-        <li>Englisch — IELTS 7,0 (2018‑11‑03)</li>
+        <li>Englisch — C1 (IELTS 7,0)</li>
+        <li>Deutsch — C1 (TestDaF Stufe 4)</li>
+        <li>Schwedisch — C1-Sprachniveau</li>
       </ul>
     </section>
 
     <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
-      <p>© <span class="year"></span> Yi Luo. Erstellt mit semantischem HTML und druckfertigem A4‑Layout.</p>
+      <p>© <span class="year"></span> Yi Luo. Erstellt mit semantischem HTML und druckfertigem A4-Layout.</p>
     </section>
   </main>
 
@@ -564,12 +575,99 @@
       <img class="avatar" src="photo.jpg" alt="Porträtt av Yi Luo" />
     </header>
 
-    
     <section id="summary-se">
       <h2>Sammanfattning</h2>
-      <p>Datavetenskapsstudent med starka studieresultat (GPA 11,7/12) och 150+ hp. Erfaren lärarassistent med praktisk programmerings‑ och webbutvecklingserfarenhet. Skicklig i Python, Java, C++ och fullstack‑utveckling. Flerspråkig med internationell utbildning i Kanada, Tyskland och Sverige.</p>
+      <p>Datavetenskapsstudent med solid programmeringsgrund och praktisk erfarenhet av Python, Java och C++. Har byggt flera mjukvaru- och webbprojekt som visar problemlösningsförmåga och algoritmiskt tänkande. Erfaren lärarassistent med starka kommunikations- och felsökningsfärdigheter. Söker en praktikplats inom mjukvaruutveckling för att omsätta akademiska kunskaper i praktiken.</p>
     </section>
-<section id="education-se">
+
+    <section id="skills-se">
+      <h2>Tekniska färdigheter</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmeringsspråk</h3>
+          <ul>
+            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+          </ul>
+          <h3 class="where">Webb</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+          </ul>
+          <h3 class="where">Koncept</h3>
+          <ul>
+            <li>Datastrukturer, algoritmer, databaser, OOP</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Verktyg &amp; ramverk</h3>
+          <ul>
+            <li>Git, UNIX-skal, LaTeX, MATLAB</li>
+          </ul>
+          <h3 class="where">Operativsystem</h3>
+          <ul>
+            <li>Windows, macOS, Linux</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-se">
+      <h2>Projekt</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Personlig portföljwebbplats</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Designade och utvecklade en responsiv, flerspråkig personlig webbplats. Implementerade utskriftsklar A4-layout och dynamiskt språkbyte. Publicerad via GitHub Pages för att visa upp portfölj och projekt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Utvecklade en interaktiv webbapplikation för att skapa och visualisera dynamiska släktträd. Funktioner för att lägga till personer, koppla förälder–barn-relationer och definiera par eller syskon. Designade ett responsivt och användarvänligt gränssnitt med realtidsuppdateringar via DOM-manipulation och JavaScript-datastrukturer.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048-spel</h3>
+          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Byggde fullständig spellogik med objektorienterad design och MVC-arkitektur. Skapade JUnit-tester för att säkerställa korrekthet och lättunderhållen kod.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku-lösare</h3>
+          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p>Implementerade en backtracking-algoritm för att effektivt lösa Sudoku-pussel. Utformade ett konsolbaserat användargränssnitt och testade edge cases.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-se">
+      <h2>Arbetslivserfarenhet</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Lärarassistent — McMaster University</h3>
+          <p class="where">Hamilton, ON, Kanada</p>
+          <p>Arbetade i tre datavetenskapskurser: COMPSCI 2DB3 (Databaser), SFWRENG 2C03 (Datastrukturer och algoritmer) och COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Höll handledningar och labbar för 50+ studenter; gav stöd i felsökning och algoritmdesign. Förbättrade kursmaterial och rättningsskript för att öka studiernas effektivitet. Gav akademisk handledning genom mottagningstider och e-post.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Lärarassistent (ideellt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Kalkyl och vektorer</p>
+          <p>Stödde undervisning och kamratstöd i kalkyl och vektorer för gymnasieelever.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-se">
       <h2>Utbildning</h2>
       <div class="item">
         <div class="when">2025.09 – nu</div>
@@ -579,17 +677,17 @@
         </div>
       </div>
       <div class="item">
-        <div class="when">2022.03 – 2025.08</div>
-        <div class="what">
-          <h3>Lunds universitet; Universitetet i Stuttgart/Hamburg; Goethe‑Institut</h3>
-          <p class="where">Kurser i tyska och svenska</p>
-        </div>
-      </div>
-      <div class="item">
         <div class="when">2019.09 – 2022.01</div>
         <div class="what">
           <h3>McMaster University — Kandidatexamen i datavetenskap</h3>
-          <p class="where">150 hp genomförda · GPA 11,7/12,0</p>
+          <p class="where">150 hp genomförda · GPA 11,7/12,0 · Hamilton, ON, Kanada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lunds universitet / Stuttgart universitet / Goethe-Institut</h3>
+          <p class="where">Studier i tyska och svenska</p>
         </div>
       </div>
       <div class="item">
@@ -601,127 +699,26 @@
       </div>
     </section>
 
-    <section id="experience-se">
-      <h2>Arbetslivserfarenhet</h2>
-      <div class="item">
-        <div class="when">2023.01 – 2023.04</div>
-        <div class="what">
-          <h3>Lärarassistent — McMaster University</h3>
-          <p class="where">COMPSCI 2DB3 – Databaser</p>
-          <p>Höll handledningar och labbar; mottagningstider och e‑poststöd; rättning och betyg; materialförberedelse och samordning med lärare; tentamensvakt.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2022.01 – 2022.04</div>
-        <div class="what">
-          <h3>Lärarassistent — McMaster University</h3>
-          <p class="where">SFWRENG 2C03 – Datastrukturer och algoritmer</p>
-          <p>Stöd för lärande via labbar, handledningar, rättning och studentkontakt.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2021.01 – 2021.04</div>
-        <div class="what">
-          <h3>Lärarassistent — McMaster University</h3>
-          <p class="where">COMPSCI 1XC3 – Praktik & erfarenhet: utvecklingsgrunder</p>
-          <p>Assisterade i föreläsningar och labbar, rättning och kursdrift.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">2018.11 – 2019.02</div>
-        <div class="what">
-          <h3>Lärarassistent (ideellt) — Blyth Academy Mississauga</h3>
-          <p class="where">MCV4U – Kalkyl och vektorer</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills-se">
-      <h2>Tekniska färdigheter</h2>
-      <div class="cols">
-        <div>
-          <h3 class="where">Programmering</h3>
-          <ul>
-            <li>Python, Java, C, C++, Haskell, SQL</li>
-          </ul>
-          <h3 class="where">Webb</h3>
-          <ul>
-            <li>HTML, CSS, JavaScript</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="where">Verktyg & tekniker</h3>
-          <ul>
-            <li>Git, UNIX‑skalskript, MATLAB, LaTeX</li>
-          </ul>
-          <h3 class="where">Produktivitet & OS</h3>
-          <ul>
-            <li>Word, Excel, PowerPoint, Teams · Windows, macOS</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    
-    <section id="projects-se">
-      <h2>Projekt</h2>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Personlig webbplats</h3>
-          <p class="where">HTML, CSS, JavaScript</p>
-          <p>Byggde en flerspråkig, responsiv portfölj med utskriftsklar A4‑layout och språkväxling.</p>
-          <p><a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>Sudoku‑lösare</h3>
-          <p class="where">Python</p>
-          <p>Implementerade en backtracking‑algoritm för att effektivt lösa Sudoku.</p>
-          <p><a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">Se mer på GitHub</a></p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048‑spel</h3>
-          <p class="where">C++</p>
-          <p>Utvecklade den fullständiga spellogiken inklusive sammanslagning, rörelse och slumpgenerering med OOP‑principer.</p>
-        </div>
-      </div>
-      <div class="item">
-        <div class="when">—</div>
-        <div class="what">
-          <h3>2048‑spel</h3>
-          <p class="where">Java, MVC</p>
-          <p>Byggde en Java‑version av 2048 med Model‑View‑Controller‑arkitektur och JUnit‑tester för logikvalidering.</p>
-        </div>
-      </div>
-    </section>
-
-
     <section id="awards-se">
       <h2>Utmärkelser</h2>
       <ul>
         <li>McMaster University Dean’s Honour List — 2020, 2021</li>
         <li>Ontario Scholar — 2019</li>
-        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Skolmästare, Certificate of Distinction</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 skolmästare &amp; Certificate of Distinction</li>
       </ul>
     </section>
 
     <section id="languages-se">
       <h2>Språk</h2>
       <ul>
-        <li>Svenska — behörighet för högskolestudier (2024‑05‑31)</li>
-        <li>Tyska — TestDaF nivå 4 i alla delar (2023‑07‑14)</li>
-        <li>Engelska — IELTS 7,0 (2018‑11‑03)</li>
+        <li>Engelska — C1 (IELTS 7,0)</li>
+        <li>Tyska — C1 (TestDaF nivå 4)</li>
+        <li>Svenska — C1-nivå (behörighet för högskolestudier)</li>
       </ul>
     </section>
 
     <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
-      <p>© <span class="year"></span> Yi Luo. Byggd med semantiskt HTML och utskriftsvänlig A4‑stil.</p>
+      <p>© <span class="year"></span> Yi Luo. Byggd med semantiskt HTML och utskriftsvänlig A4-stil.</p>
     </section>
   </main>
 
@@ -729,7 +726,7 @@
     // Year stamps
     document.querySelectorAll('.year').forEach(el=> el.textContent = new Date().getFullYear());
 
-    // Language switching with localStorage + URL hash support
+    // Language switching with localStorage + URL param support
     const buttons = document.querySelectorAll('.lang-switch button');
     const sheets = document.querySelectorAll('.sheet');
 

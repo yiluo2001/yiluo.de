@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sudoku Solver</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: #f3f4f6;
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .app {
+      background: #ffffff;
+      padding: 20px 24px 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      max-width: 480px;
+      width: 100%;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 16px;
+      font-size: 13px;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .grid {
+      border-collapse: collapse;
+      margin: 0 auto 16px;
+    }
+
+    .grid td {
+      padding: 0;
+      border: 1px solid #d1d5db;
+    }
+
+    /* Thicker borders between 3x3 sub-grids */
+    .grid tr:nth-child(3n) td {
+      border-bottom-width: 2px;
+    }
+    .grid tr:nth-child(1) td {
+      border-top-width: 2px;
+    }
+    .grid td:nth-child(3n) {
+      border-right-width: 2px;
+    }
+    .grid td:nth-child(1) {
+      border-left-width: 2px;
+    }
+
+    .cell-input {
+      width: 40px;
+      height: 40px;
+      border: none;
+      text-align: center;
+      font-size: 18px;
+      outline: none;
+      background: #f9fafb;
+      caret-color: transparent; /* no text cursor */
+    }
+
+    .cell-input:focus {
+      background: #e5f3ff;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.05s ease, box-shadow 0.1s ease, background 0.1s ease;
+    }
+
+    .btn-primary {
+      background: #000000;
+      color: white;
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+      transform: translateY(-1px);
+    }
+
+    .status {
+      text-align: center;
+      font-size: 13px;
+      min-height: 18px;
+      color: #4b5563;
+    }
+
+    .status.error {
+      color: #b91c1c;
+    }
+
+    .status.success {
+      color: #15803d;
+    }
+
+    @media (max-width: 480px) {
+      .cell-input {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Sudoku Solver</h1>
+    <p>Enter the known digits (1–9), leave unknown cells empty, then hit “Solve”.</p>
+
+    <table class="grid" id="sudoku-grid"></table>
+
+    <div class="controls">
+      <button class="btn-primary" id="solve-btn">Solve</button>
+      <button class="btn-secondary" id="clear-btn">Clear</button>
+      <button class="btn-secondary" id="example-btn">Load Example</button>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    const gridElement = document.getElementById("sudoku-grid");
+    const statusElement = document.getElementById("status");
+    const SIZE = 9;
+
+    // Create 9x9 grid of inputs
+    function createGrid() {
+      for (let r = 0; r < SIZE; r++) {
+        const row = document.createElement("tr");
+        for (let c = 0; c < SIZE; c++) {
+          const cell = document.createElement("td");
+          const input = document.createElement("input");
+          input.type = "text";
+          input.maxLength = 1;
+          input.className = "cell-input";
+          input.dataset.row = r;
+          input.dataset.col = c;
+
+          // Restrict input to digits 1–9
+          input.addEventListener("input", (e) => {
+            const v = e.target.value.replace(/\D/g, ""); // remove non-digits
+            if (v === "" || v === "0") {
+              e.target.value = "";
+            } else {
+              e.target.value = v[0]; // first digit only
+            }
+          });
+
+          cell.appendChild(input);
+          row.appendChild(cell);
+        }
+        gridElement.appendChild(row);
+      }
+    }
+
+    createGrid();
+
+    function clearStatus() {
+      statusElement.textContent = "";
+      statusElement.classList.remove("error", "success");
+    }
+
+    function setStatus(message, type) {
+      statusElement.textContent = message;
+      statusElement.classList.remove("error", "success");
+      if (type) statusElement.classList.add(type);
+    }
+
+    function getBoardFromInputs() {
+      const board = [];
+      for (let r = 0; r < SIZE; r++) {
+        const row = [];
+        for (let c = 0; c < SIZE; c++) {
+          const input = document.querySelector(
+            `.cell-input[data-row="${r}"][data-col="${c}"]`
+          );
+          const val = input.value.trim();
+          row.push(val === "" ? 0 : parseInt(val, 10));
+        }
+        board.push(row);
+      }
+      return board;
+    }
+
+    function setBoardToInputs(board) {
+      for (let r = 0; r < SIZE; r++) {
+        for (let c = 0; c < SIZE; c++) {
+          const input = document.querySelector(
+            `.cell-input[data-row="${r}"][data-col="${c}"]`
+          );
+          input.value = board[r][c] === 0 ? "" : board[r][c];
+        }
+      }
+    }
+
+    // Check if placing num at board[row][col] is valid
+    function isValid(board, row, col, num) {
+      // Check row
+      for (let c = 0; c < SIZE; c++) {
+        if (board[row][c] === num) return false;
+      }
+
+      // Check column
+      for (let r = 0; r < SIZE; r++) {
+        if (board[r][col] === num) return false;
+      }
+
+      // Check 3x3 box
+      const boxRow = Math.floor(row / 3) * 3;
+      const boxCol = Math.floor(col / 3) * 3;
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          if (board[boxRow + r][boxCol + c] === num) return false;
+        }
+      }
+      return true;
+    }
+
+    // Backtracking solver
+    function solveSudoku(board) {
+      for (let row = 0; row < SIZE; row++) {
+        for (let col = 0; col < SIZE; col++) {
+          if (board[row][col] === 0) {
+            for (let num = 1; num <= 9; num++) {
+              if (isValid(board, row, col, num)) {
+                board[row][col] = num;
+                if (solveSudoku(board)) {
+                  return true;
+                }
+                board[row][col] = 0;
+              }
+            }
+            return false; // no valid number found
+          }
+        }
+      }
+      return true; // solved
+    }
+
+    // Simple initial consistency check: no conflicts in given numbers
+    function isInitialBoardConsistent(board) {
+      for (let r = 0; r < SIZE; r++) {
+        for (let c = 0; c < SIZE; c++) {
+          const num = board[r][c];
+          if (num !== 0) {
+            board[r][c] = 0;
+            const ok = isValid(board, r, c, num);
+            board[r][c] = num;
+            if (!ok) return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    document.getElementById("solve-btn").addEventListener("click", () => {
+      clearStatus();
+      let board = getBoardFromInputs();
+
+      if (!isInitialBoardConsistent(board)) {
+        setStatus("The given numbers conflict with Sudoku rules.", "error");
+        return;
+      }
+
+      const copy = board.map((row) => row.slice());
+
+      const solved = solveSudoku(copy);
+      if (solved) {
+        setBoardToInputs(copy);
+        setStatus("Solved successfully!", "success");
+      } else {
+        setStatus("No solution found for the given puzzle.", "error");
+      }
+    });
+
+    document.getElementById("clear-btn").addEventListener("click", () => {
+      clearStatus();
+      const inputs = document.querySelectorAll(".cell-input");
+      inputs.forEach((input) => (input.value = ""));
+    });
+
+    document.getElementById("example-btn").addEventListener("click", () => {
+      clearStatus();
+      // A known solvable Sudoku example
+      const example = [
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+      ];
+      setBoardToInputs(example);
+    });
+  </script>
+</body>
+</html>

@@ -28,7 +28,6 @@
     .sheet{
       box-sizing: border-box;
       width: min(860px, calc(100vw - 2rem));
-      /* Remove aspect-ratio so height auto-expands with content */
       min-height: 100vh;        /* feel like an endless page */
       margin: 0 auto 2.5rem;
       padding: clamp(1.25rem, 2.5vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
@@ -164,9 +163,6 @@
       header{ grid-template-columns: 1fr; }
       .item{ grid-template-columns: 1fr; }
       .when{ order: -1; }
-      /* Keep nav visible on mobile; remove if you want them hidden:
-      .site-nav{ display:none; }
-      */
     }
 
     /* Language switcher */
@@ -225,7 +221,6 @@
     <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
     <a href="https://www.yiluo.de/famtree">Family Tree</a>
     <a href="https://www.yiluo.de/dice">Dice Roller</a>
-
   </nav>
 
   <nav class="lang-switch" aria-label="Language selector">
@@ -253,7 +248,7 @@
 
     <section id="summary-en">
       <h2>Profile</h2>
-      <p>Computer Science student with a strong programming foundation and hands-on experience in Python, Java, and C++. Built multiple software and web projects demonstrating problem-solving and algorithmic thinking. Skilled teaching assistant with strong communication and debugging skills. Seeking a software engineering internship to apply academic knowledge in a practical environment.</p>
+      <p>Full-stack Computer Science student with experience in React, Node.js, and Python, and 2+ years of teaching university-level courses in algorithms, data structures, and databases. Skilled in building interactive web applications and debugging complex technical problems. Multilingual communicator with C1 German and C1 Swedish proficiency, bringing strong cross-cultural collaboration skills. Seeking a software engineering internship to apply technical depth and problem-solving ability in a real-world environment.</p>
     </section>
 
     <section id="skills-en">
@@ -262,25 +257,37 @@
         <div>
           <h3 class="where">Languages</h3>
           <ul>
-            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
           </ul>
-          <h3 class="where">Web</h3>
+          <h3 class="where">Frontend</h3>
           <ul>
-            <li>HTML, CSS, JavaScript</li>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
           </ul>
-          <h3 class="where">Concepts</h3>
+          <h3 class="where">Backend</h3>
           <ul>
-            <li>Data Structures, Algorithms, Databases, OOP</li>
+            <li>Node.js, Express.js, Flask, REST APIs, WebSockets, JWT Auth</li>
           </ul>
         </div>
         <div>
-          <h3 class="where">Tools &amp; Frameworks</h3>
+          <h3 class="where">Databases</h3>
           <ul>
-            <li>Git, UNIX Shell, LaTeX, MATLAB</li>
+            <li>PostgreSQL, MongoDB, Redis</li>
           </ul>
-          <h3 class="where">Operating Systems</h3>
+          <h3 class="where">DevOps &amp; Cloud</h3>
           <ul>
-            <li>Windows, macOS, Linux</li>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testing</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Tools</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">CS Foundations</h3>
+          <ul>
+            <li>Data Structures &amp; Algorithms, Databases, OOP, Operating Systems Concepts</li>
           </ul>
         </div>
       </div>
@@ -308,7 +315,7 @@
         <div class="when">—</div>
         <div class="what">
           <h3>2048 Game</h3>
-          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
           <p>Built complete game logic using object-oriented design and MVC architecture. Implemented JUnit tests to ensure correctness and maintainable code structure.</p>
         </div>
       </div>
@@ -316,8 +323,8 @@
         <div class="when">—</div>
         <div class="what">
           <h3>Sudoku Solver</h3>
-          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
-          <p>Implemented a backtracking algorithm for solving Sudoku puzzles efficiently. Designed a console-based user interface and validated edge cases through testing.</p>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Built a Sudoku solver using a recursive backtracking algorithm with full row/column/subgrid validation. Developed an interactive web interface supporting real-time input checks, conflict detection, and in-browser solving.</p>
         </div>
       </div>
     </section>
@@ -329,7 +336,7 @@
         <div class="what">
           <h3>Teaching Assistant — McMaster University</h3>
           <p class="where">Hamilton, ON, Canada</p>
-          <p>Assisted in three computer science courses: COMPSCI 2DB3 (Databases), SFWRENG 2C03 (Data Structures and Algorithms), and COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Assisted in three computer science courses: Databases, Data Structures &amp; Algorithms, and Computer Science Practice.</p>
           <p>Led tutorials and lab sessions for 50+ students; supported debugging and algorithm design. Improved course materials and grading scripts to enhance student learning efficiency. Provided academic mentoring through office hours and email support.</p>
         </div>
       </div>
@@ -349,7 +356,7 @@
         <div class="when">2025.09 – present</div>
         <div class="what">
           <h3>Stockholm University — B.Sc. Computer Science</h3>
-          <p class="where">Expected Graduation: June 2026</p>
+          <p class="where">Stockholm, Sweden · Expected Graduation: June 2026</p>
         </div>
       </div>
       <div class="item">
@@ -417,7 +424,7 @@
 
     <section id="summary-de">
       <h2>Profil</h2>
-      <p>Informatikstudent mit solider Programmiergrundlage und praktischer Erfahrung in Python, Java und C++. Entwicklung mehrerer Software- und Webprojekte mit Fokus auf Problemlösung und algorithmischem Denken. Erfahrene Teaching Assistant mit ausgeprägten Kommunikations- und Debugging-Fähigkeiten. Auf der Suche nach einem Praktikum in der Softwareentwicklung, um akademisches Wissen in der Praxis anzuwenden.</p>
+      <p>Full-Stack-Informatikstudent mit Erfahrung in React, Node.js und Python sowie über zwei Jahren Tätigkeit als Teaching Assistant in Algorithmen, Datenstrukturen und Datenbanken auf Universitätsniveau. Erfahren in der Entwicklung interaktiver Webanwendungen und im Debugging komplexer technischer Probleme. Mehrsprachige Kommunikatorin mit C1-Niveau in Deutsch und Schwedisch und ausgeprägten interkulturellen Zusammenarbeitskompetenzen. Sucht ein Praktikum in der Softwareentwicklung, um technische Tiefe und Problemlösefähigkeit in der Praxis einzusetzen.</p>
     </section>
 
     <section id="skills-de">
@@ -426,25 +433,37 @@
         <div>
           <h3 class="where">Programmiersprachen</h3>
           <ul>
-            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
           </ul>
-          <h3 class="where">Web</h3>
+          <h3 class="where">Frontend</h3>
           <ul>
-            <li>HTML, CSS, JavaScript</li>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
           </ul>
-          <h3 class="where">Konzepte</h3>
+          <h3 class="where">Backend</h3>
           <ul>
-            <li>Datenstrukturen, Algorithmen, Datenbanken, OOP</li>
+            <li>Node.js, Express.js, Flask, REST-APIs, WebSockets, JWT-Auth</li>
           </ul>
         </div>
         <div>
-          <h3 class="where">Tools &amp; Frameworks</h3>
+          <h3 class="where">Datenbanken</h3>
           <ul>
-            <li>Git, UNIX-Shell, LaTeX, MATLAB</li>
+            <li>PostgreSQL, MongoDB, Redis</li>
           </ul>
-          <h3 class="where">Betriebssysteme</h3>
+          <h3 class="where">DevOps &amp; Cloud</h3>
           <ul>
-            <li>Windows, macOS, Linux</li>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testing</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Tools</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">Informatik-Grundlagen</h3>
+          <ul>
+            <li>Datenstrukturen &amp; Algorithmen, Datenbanken, OOP, Betriebssystemkonzepte</li>
           </ul>
         </div>
       </div>
@@ -472,7 +491,7 @@
         <div class="when">—</div>
         <div class="what">
           <h3>2048-Spiel</h3>
-          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
           <p>Komplette Spiellogik mit objektorientiertem Design und MVC-Architektur umgesetzt. JUnit-Tests zur Sicherstellung der Korrektheit und Wartbarkeit geschrieben.</p>
         </div>
       </div>
@@ -480,8 +499,8 @@
         <div class="when">—</div>
         <div class="what">
           <h3>Sudoku-Solver</h3>
-          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
-          <p>Backtracking-Algorithmus zur effizienten Lösung von Sudoku-Rätseln implementiert. Konsolenbasiertes Interface erstellt und Randfälle durch Tests validiert.</p>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Sudoku-Löser mit rekursivem Backtracking-Algorithmus und vollständiger Zeilen/Spalten/Subgrid-Validierung entwickelt. Interaktives Webinterface mit Echtzeit-Eingabeprüfung, Konflikterkennung und Lösung direkt im Browser implementiert.</p>
         </div>
       </div>
     </section>
@@ -493,7 +512,7 @@
         <div class="what">
           <h3>Teaching Assistant — McMaster University</h3>
           <p class="where">Hamilton, ON, Kanada</p>
-          <p>Mitarbeit in drei Informatikveranstaltungen: COMPSCI 2DB3 (Datenbanken), SFWRENG 2C03 (Datenstrukturen und Algorithmen) und COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Mitarbeit in drei Informatikveranstaltungen: Databases, Data Structures &amp; Algorithms und Computer Science Practice.</p>
           <p>Leitete Tutorien und Praktika für über 50 Studierende; Unterstützung beim Debugging und bei der Entwicklung von Algorithmen. Kursmaterialien und Bewertungsskripte zur Steigerung der Lerneffizienz verbessert. Fachliche Betreuung über Sprechstunden und E-Mail-Support.</p>
         </div>
       </div>
@@ -513,7 +532,7 @@
         <div class="when">2025.09 – heute</div>
         <div class="what">
           <h3>Universität Stockholm — B.Sc. Informatik</h3>
-          <p class="where">Voraussichtlicher Abschluss: Juni 2026</p>
+          <p class="where">Stockholm, Schweden · Voraussichtlicher Abschluss: Juni 2026</p>
         </div>
       </div>
       <div class="item">
@@ -581,7 +600,7 @@
 
     <section id="summary-se">
       <h2>Sammanfattning</h2>
-      <p>Datavetenskapsstudent med solid programmeringsgrund och praktisk erfarenhet av Python, Java och C++. Har byggt flera mjukvaru- och webbprojekt som visar problemlösningsförmåga och algoritmiskt tänkande. Erfaren lärarassistent med starka kommunikations- och felsökningsfärdigheter. Söker en praktikplats inom mjukvaruutveckling för att omsätta akademiska kunskaper i praktiken.</p>
+      <p>Fullstack-datavetenskapsstudent med erfarenhet av React, Node.js och Python samt över två års undervisning i universitetskurser inom algoritmer, datastrukturer och databaser. Van att bygga interaktiva webbapplikationer och felsöka komplexa tekniska problem. Flerspråkig kommunikatör med C1-nivå i både tyska och svenska och goda erfarenheter av interkulturellt samarbete. Söker en praktikplats inom mjukvaruutveckling för att omsätta teknisk fördjupning och problemlösningsförmåga i verkliga projekt.</p>
     </section>
 
     <section id="skills-se">
@@ -590,25 +609,37 @@
         <div>
           <h3 class="where">Programmeringsspråk</h3>
           <ul>
-            <li>Python, Java, C++, JavaScript, SQL, C, Haskell</li>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
           </ul>
-          <h3 class="where">Webb</h3>
+          <h3 class="where">Frontend</h3>
           <ul>
-            <li>HTML, CSS, JavaScript</li>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
           </ul>
-          <h3 class="where">Koncept</h3>
+          <h3 class="where">Backend</h3>
           <ul>
-            <li>Datastrukturer, algoritmer, databaser, OOP</li>
+            <li>Node.js, Express.js, Flask, REST-API:er, WebSockets, JWT-auth</li>
           </ul>
         </div>
         <div>
-          <h3 class="where">Verktyg &amp; ramverk</h3>
+          <h3 class="where">Databaser</h3>
           <ul>
-            <li>Git, UNIX-skal, LaTeX, MATLAB</li>
+            <li>PostgreSQL, MongoDB, Redis</li>
           </ul>
-          <h3 class="where">Operativsystem</h3>
+          <h3 class="where">DevOps &amp; moln</h3>
           <ul>
-            <li>Windows, macOS, Linux</li>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testning</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Verktyg</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">CS-grunder</h3>
+          <ul>
+            <li>Datastrukturer &amp; algoritmer, databaser, OOP, operativsystemkoncept</li>
           </ul>
         </div>
       </div>
@@ -636,7 +667,7 @@
         <div class="when">—</div>
         <div class="what">
           <h3>2048-spel</h3>
-          <p class="where">Java, MVC — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
           <p>Byggde fullständig spellogik med objektorienterad design och MVC-arkitektur. Skapade JUnit-tester för att säkerställa korrekthet och lättunderhållen kod.</p>
         </div>
       </div>
@@ -644,8 +675,8 @@
         <div class="when">—</div>
         <div class="what">
           <h3>Sudoku-lösare</h3>
-          <p class="where">Python — <a href="https://github.com/yiluo2001" target="_blank" rel="noopener">GitHub</a></p>
-          <p>Implementerade en backtracking-algoritm för att effektivt lösa Sudoku-pussel. Utformade ett konsolbaserat användargränssnitt och testade edge cases.</p>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Byggde en Sudoku-lösare med en rekursiv backtracking-algoritm med full rad/kolumn/subrutnätsvalidering. Utvecklade ett interaktivt webbgränssnitt med realtidskontroll av inmatning, konfliktdetektering och lösning direkt i webbläsaren.</p>
         </div>
       </div>
     </section>
@@ -657,7 +688,7 @@
         <div class="what">
           <h3>Lärarassistent — McMaster University</h3>
           <p class="where">Hamilton, ON, Kanada</p>
-          <p>Arbetade i tre datavetenskapskurser: COMPSCI 2DB3 (Databaser), SFWRENG 2C03 (Datastrukturer och algoritmer) och COMPSCI 1XC3 (Computer Science Practice).</p>
+          <p>Arbetade i tre datavetenskapskurser: Databaser, Datastrukturer &amp; algoritmer och Computer Science Practice.</p>
           <p>Höll handledningar och labbar för 50+ studenter; gav stöd i felsökning och algoritmdesign. Förbättrade kursmaterial och rättningsskript för att öka studiernas effektivitet. Gav akademisk handledning genom mottagningstider och e-post.</p>
         </div>
       </div>
@@ -677,7 +708,7 @@
         <div class="when">2025.09 – nu</div>
         <div class="what">
           <h3>Stockholms universitet — Kandidatexamen i datavetenskap</h3>
-          <p class="where">Beräknad examen: juni 2026</p>
+          <p class="where">Stockholm, Sverige · Beräknad examen: juni 2026</p>
         </div>
       </div>
       <div class="item">

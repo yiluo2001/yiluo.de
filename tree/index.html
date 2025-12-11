@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Digraph Tree Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Graphviz in the browser -->
+  <script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script>
+  <script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script>
+
+  <style>
+    /* --- PAGE BACKGROUND --- */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(#ffffff, #f1f1f1);
+        height: 100vh;
+    }
+
+    /* --- TOP HEADER --- */
+    .top-header {
+        background: #ffffff;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .breadcrumbs a {
+        text-decoration: none;
+        color: #333;
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    .lang-selector a {
+        margin-left: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #666;
+    }
+
+    .lang-selector a.active {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* --- MAIN NAVIGATION --- */
+    .main-nav {
+        width: 100%;
+        background: #e7e7e7;
+        padding: 10px 25px;
+        border-top: 3px solid #c41717;
+        border-bottom: 1px solid #d5d5d5;
+    }
+
+    .main-nav a {
+        margin-right: 25px;
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+    }
+
+    /* --- FLOATING PAPER CONTENT --- */
+    .paper {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 
+            0 12px 28px rgba(0,0,0,0.18),
+            0 4px 6px rgba(0,0,0,0.12);
+    }
+
+    .paper h1 {
+        margin-top: 0;
+        font-size: 22px;
+    }
+
+  header {
+    padding: 1rem 1.5rem;
+    background: #000; /* black */
+    color: #fff; /* white */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  main {
+    padding: 1rem 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    main {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .card {
+    background: #fff; /* white */
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08); /* grey shadow */
+    border: 1px solid #d9d9d9; /* grey */
+  }
+
+  .card h2 {
+    margin-top: 0;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #444; /* grey text */
+    margin-bottom: 0.2rem;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.4rem;
+    border: 1px solid #bbb; /* grey border */
+    font-size: 0.85rem;
+    background: #fff;
+    color: #111;
+    box-sizing: border-box;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #333; /* darker grey */
+    box-shadow: 0 0 0 1px #333;
+  }
+
+  .row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .row > div {
+    flex: 1;
+  }
+
+  /* BUTTONS — grayscale only */
+
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  button.primary {
+    background: #222; /* dark grey */
+    color: #fff;
+  }
+
+  button.secondary {
+    background: #e0e0e0; /* light grey */
+    color: #000;
+  }
+
+  button.danger {
+    background: #555; /* neutral grey instead of red */
+    color: #fff;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .pill-list {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .pill {
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: #f0f0f0; /* very light grey */
+    border: 1px solid #ccc;
+  }
+
+  .pill strong {
+    font-weight: 600;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    color: #333;
+  }
+
+  #graph {
+    background: #fafafa;
+    border-radius: 0.75rem;
+    border: 1px dashed #bbb;
+    padding: 0.5rem;
+    min-height: 240px;
+    overflow: auto;
+  }
+
+  #graph svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .status {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.35rem;
+  }
+
+  .file-input-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  input[type="file"] {
+    font-size: 0.8rem;
+  }
+
+  pre {
+    font-size: 0.75rem;
+    background: #111; /* very dark grey */
+    color: #eee; /* light grey text */
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    overflow: auto;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+  </style>
+</head>
+<body>
+<!-- HEADER -->
+<div class="top-header">
+    <div class="breadcrumbs">
+        <a href="#">Home page</a>
+    </div>
+
+    <div class="lang-selector">
+        <a href="#" class="active" lang="en">EN</a>
+        <a href="#" lang="de">DE</a>
+        <a href="#" lang="se">SE</a>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+
+        <div class="paper-top-strip">
+            <nav class="main-nav">
+                <a href="https://www.yiluo.de/tree">Tree Builder</a>
+                <a href="https://www.yiluo.de/2048">2048</a>
+                <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
+            </nav>
+        </div>
+
+<main>
+  <!-- Left: Controls -->
+  <section class="card">
+    <h2>Graph Controls</h2>
+
+    <!-- Node controls -->
+    <div class="section-title">Add Node</div>
+    <div class="row">
+      <div>
+        <label for="nodeLabel">Node Label</label>
+        <input type="text" id="nodeLabel" placeholder="e.g. Apple" />
+      </div>
+    </div>
+    <button class="primary" id="addNodeBtn">Add Node</button>
+
+    <!-- Edge controls -->
+    <div class="section-title" style="margin-top:0.9rem;">Add Edge</div>
+    <div class="row">
+      <div>
+        <label for="edgeFrom">From (ID)</label>
+        <input type="text" id="edgeFrom" placeholder="node id" />
+      </div>
+      <div>
+        <label for="edgeTo">To (ID)</label>
+        <input type="text" id="edgeTo" placeholder="node id" />
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="edgeLabel">Edge Label (optional)</label>
+        <input type="text" id="edgeLabel" placeholder="e.g. weight or name" />
+      </div>
+      <div style="display:flex;align-items:flex-end;">
+        <button class="primary" id="addEdgeBtn" style="width:100%;">Add Edge</button>
+      </div>
+    </div>
+
+
+
+    <div class="toolbar">
+      <button class="secondary" id="renderBtn">Render SVG</button>
+      <button class="secondary" id="clearBtn">Clear Graph</button>
+    </div>
+    <div class="status" id="statusText">No graph yet. Add some nodes and edges!</div>
+
+    <!-- Current nodes/edges -->
+    <div class="section-title">Nodes</div>
+    <div class="pill-list" id="nodesList"></div>
+
+    <div class="section-title">Edges</div>
+    <div class="pill-list" id="edgesList"></div>
+
+    <hr style="margin:1rem 0;border:none;border-top:1px solid #cccccc;">
+
+    <!-- Import / export -->
+    <h2>Import / Export</h2>
+    <div class="toolbar">
+      <button class="primary" id="downloadPyBtn">Download Python File</button>
+    </div>
+
+    <div class="file-input-label">Import project from Python file (.py)</div>
+    <input type="file" id="uploadPyInput" accept=".py" />
+
+    <div class="status" id="importStatus"></div>
+  </section>
+
+  <!-- Right: Graph view + preview of generated Python -->
+  <section class="card">
+    <h2>SVG Preview</h2>
+    <div id="graph">
+      <!-- SVG will be injected here -->
+    </div>
+
+    <div class="status">Rendered using Graphviz (Viz.js). Export uses Python <code>graphviz.Digraph</code>.</div>
+
+    <h2 style="margin-top:1rem;">Generated Python (read-only preview)</h2>
+    <pre id="pythonPreview"></pre>
+  </section>
+</main>
+
+<script>
+  // In-memory representation
+  const nodes = new Map(); // id -> label
+  const edges = [];        // {from, to, label}
+
+  const nodeLabelInput = document.getElementById("nodeLabel");
+  const edgeFromInput = document.getElementById("edgeFrom");
+  const edgeToInput = document.getElementById("edgeTo");
+  const edgeLabelInput = document.getElementById("edgeLabel");
+
+  const nodesList = document.getElementById("nodesList");
+  const edgesList = document.getElementById("edgesList");
+  const statusText = document.getElementById("statusText");
+  const graphDiv = document.getElementById("graph");
+  const pythonPreview = document.getElementById("pythonPreview");
+  const importStatus = document.getElementById("importStatus");
+
+  // Helper: next unused natural number as string
+  function nextNodeId() {
+    let id = 1;
+    while (nodes.has(String(id))) {
+      id++;
+    }
+    return String(id);
+  }
+
+  // Add node (auto ID, label as baseLabel#ID)
+  document.getElementById("addNodeBtn").addEventListener("click", () => {
+    const baseLabel = nodeLabelInput.value.trim() || "Node";
+    const id = nextNodeId();          // auto-generated numeric ID
+    const fullLabel = `${baseLabel}#${id}`;
+
+    nodes.set(id, fullLabel);
+    statusText.textContent = `Node ${fullLabel} added.`;
+
+    nodeLabelInput.value = "";        // clear field
+    refreshLists();
+    updatePythonPreview();
+  });
+
+  // Add edge
+  document.getElementById("addEdgeBtn").addEventListener("click", () => {
+    const from = edgeFromInput.value.trim();
+    const to = edgeToInput.value.trim();
+    const label = edgeLabelInput.value.trim();
+    if (!from || !to) {
+      alert("Edge requires both From and To node IDs.");
+      return;
+    }
+    edges.push({ from, to, label });
+    statusText.textContent = `Edge ${from} → ${to} added.`;
+    refreshLists();
+    updatePythonPreview();
+  });
+
+  // Render button
+  document.getElementById("renderBtn").addEventListener("click", renderGraph);
+
+  // Clear graph
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    if (!confirm("Clear all nodes and edges?")) return;
+    nodes.clear();
+    edges.length = 0;
+    graphDiv.innerHTML = "";
+    statusText.textContent = "Graph cleared.";
+    importStatus.textContent = "";
+    refreshLists();
+    updatePythonPreview();
+  });
+
+  // Download Python file
+  document.getElementById("downloadPyBtn").addEventListener("click", () => {
+    const code = generatePythonFile();
+    const blob = new Blob([code], { type: "text/x-python" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "my_graph_project.py";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Upload Python file
+  document.getElementById("uploadPyInput").addEventListener("change", (evt) => {
+    const file = evt.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result;
+      importFromPython(text);
+    };
+    reader.readAsText(file);
+  });
+
+  function refreshLists() {
+    // Nodes
+    nodesList.innerHTML = "";
+    for (const [id, label] of nodes.entries()) {
+      const span = document.createElement("span");
+      span.className = "pill";
+      span.textContent = `${id}: ${label}`;
+      nodesList.appendChild(span);
+    }
+
+    // Edges
+    edgesList.innerHTML = "";
+    edges.forEach((e, idx) => {
+      const span = document.createElement("span");
+      span.className = "pill";
+      span.textContent = `${e.from} → ${e.to}` + (e.label ? ` (${e.label})` : "");
+      span.title = "Click to delete this edge";
+      span.style.cursor = "pointer";
+      span.addEventListener("click", () => {
+        if (confirm("Delete this edge?")) {
+          edges.splice(idx, 1);
+          refreshLists();
+          updatePythonPreview();
+        }
+      });
+      edgesList.appendChild(span);
+    });
+  }
+
+  function buildDotSource() {
+    let dot = 'digraph G {\n';
+    dot += '  rankdir=LR;\n';
+    // nodes
+    for (const [id, label] of nodes.entries()) {
+      const safeId = JSON.stringify(String(id));
+      const safeLabel = JSON.stringify(String(label));
+      dot += `  ${safeId} [label=${safeLabel}];\n`;
+    }
+    // edges
+    for (const e of edges) {
+      const from = JSON.stringify(String(e.from));
+      const to = JSON.stringify(String(e.to));
+      const attrs = [];
+      if (e.label) {
+        attrs.push(`label=${JSON.stringify(String(e.label))}`);
+      }
+      const attrStr = attrs.length ? " [" + attrs.join(", ") + "]" : "";
+      dot += `  ${from} -> ${to}${attrStr};\n`;
+    }
+    dot += "}\n";
+    return dot;
+  }
+
+  function renderGraph() {
+    if (nodes.size === 0 && edges.length === 0) {
+      statusText.textContent = "Nothing to render yet. Add nodes and edges.";
+      return;
+    }
+    const dot = buildDotSource();
+    try {
+      const viz = new Viz();
+      viz.renderSVGElement(dot)
+        .then((svgElement) => {
+          graphDiv.innerHTML = "";
+          graphDiv.appendChild(svgElement);
+          statusText.textContent = "SVG rendered.";
+        })
+        .catch((err) => {
+          console.error(err);
+          graphDiv.innerHTML = "<p>Render error. See console.</p>";
+          statusText.textContent = "Failed to render graph.";
+        });
+    } catch (err) {
+      console.error(err);
+      graphDiv.innerHTML = "<p>Graphviz (Viz.js) failed to initialize.</p>";
+      statusText.textContent = "Failed to initialize Graphviz.";
+    }
+  }
+
+  function generatePythonFile() {
+    // Build Python script, compatible with graphviz.Digraph
+    const lines = [];
+    lines.push("import os");
+    lines.push("from graphviz import Digraph");
+    lines.push("");
+    lines.push("# Auto-generated project from HTML interface");
+    lines.push("BASE = os.path.dirname(os.path.abspath(__file__))");
+    lines.push('output = os.path.join(BASE, "my_graph")  # no extension here');
+    lines.push("");
+    lines.push("dot = Digraph()");
+    lines.push('dot.attr(rankdir="LR")');
+    lines.push("");
+    lines.push("# Nodes");
+    for (const [id, label] of nodes.entries()) {
+      const sid = JSON.stringify(String(id));
+      const slabel = JSON.stringify(String(label));
+      lines.push(`dot.node(${sid}, ${slabel})`);
+    }
+    lines.push("");
+    lines.push("# Edges");
+    for (const e of edges) {
+      const sfrom = JSON.stringify(String(e.from));
+      const sto = JSON.stringify(String(e.to));
+      if (e.label) {
+        const slabel = JSON.stringify(String(e.label));
+        lines.push(`dot.edge(${sfrom}, ${sto}, label=${slabel})`);
+      } else {
+        lines.push(`dot.edge(${sfrom}, ${sto})`);
+      }
+    }
+    lines.push("");
+    lines.push('dot.render(output, format="svg", cleanup=True)');
+    lines.push('print("Saved:", output + ".svg")');
+    lines.push("");
+    return lines.join("\n");
+  }
+
+  function updatePythonPreview() {
+    pythonPreview.textContent = generatePythonFile();
+  }
+
+  function importFromPython(text) {
+    // Very simple parser: looks for lines like:
+    // dot.node('1', 'Apple#1')
+    // dot.edge('1', '2', label='x')
+    nodes.clear();
+    edges.length = 0;
+    importStatus.textContent = "";
+
+    const nodeRegex = /dot\.node\s*\(\s*(['"])(.*?)\1\s*,\s*(['"])(.*?)\3\s*\)/g;
+    const edgeRegex = /dot\.edge\s*\(\s*(['"])(.*?)\1\s*,\s*(['"])(.*?)\3\s*(?:,\s*label\s*=\s*(['"])(.*?)\5\s*)?\)/g;
+
+    let match;
+    while ((match = nodeRegex.exec(text)) !== null) {
+      const id = match[2];
+      const label = match[4];
+      nodes.set(id, label);
+    }
+
+    while ((match = edgeRegex.exec(text)) !== null) {
+      const from = match[2];
+      const to = match[4];
+      const label = match[6] || "";
+      edges.push({ from, to, label });
+    }
+
+    if (nodes.size === 0 && edges.length === 0) {
+      importStatus.textContent = "No dot.node / dot.edge statements found. Import might have failed.";
+    } else {
+      importStatus.textContent = `Imported ${nodes.size} nodes and ${edges.length} edges from Python file.`;
+      statusText.textContent = "Project imported. You can now edit and re-export.";
+    }
+
+    refreshLists();
+    updatePythonPreview();
+    renderGraph();
+  }
+
+  // Initialize preview
+  updatePythonPreview();
+</script>
+</body>
+</html>

@@ -1,76 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Family Tree Builder (with Couples & Siblings)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    * {
-      box-sizing: border-box;
+<meta charset="UTF-8">
+<title>Yi Luo – Family Tree</title>
+
+<style>
+    /* ----- PAGE BACKGROUND (from template) ----- */
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: radial-gradient(circle at top, #ffffff 0, #f0f0f0 45%, #e5e5e5 100%);
     }
 
-    body {
+    .page-wrapper {
+        padding-top: 40px;
+        padding-bottom: 80px;
+    }
+
+    /* ----- MAIN FLOATING PAPER ----- */
+    .paper {
+        width: 92%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 3px;
+        box-shadow:
+            0 18px 45px rgba(0,0,0,0.18),
+            0 6px 12px rgba(0,0,0,0.12);
+        overflow: hidden;
+    }
+
+    /* ----- HEADER AREA (breadcrumb + languages) ----- */
+    .paper-header {
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .breadcrumbs a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .lang-selector a {
+        margin-left: 16px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .lang-selector a.active {
+        font-weight: bold;
+        color: #000;
+    }
+
+    /* ----- PROJECT BAR (grey strip + red line) ----- */
+    .paper-top-strip {
+        background: #e9e9e9;
+        border-top: 3px solid #c41717; /* red line */
+        border-bottom: 1px solid #d5d5d5;
+        padding: 12px 25px;
+    }
+
+    /* Navigation items WITHOUT hover change */
+    .main-nav a {
+        display: inline-block;
+        margin-right: 40px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #555;
+    }
+
+    /* ----- MAIN CONTENT ----- */
+    .paper-content {
+        padding: 40px 25px 60px;
+    }
+
+    .paper-content h1 {
+        margin: 0 0 20px;
+        font-size: 32px;
+    }
+
+    /* ----- FAMILY TREE APP STYLES (scoped) ----- */
+    #family-app {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
       padding: 0;
       background: #f4f4f7;
       color: #111827;
+      border-radius: 0.75rem;
+      overflow: hidden;
     }
 
-    header {
+    #family-app header {
       background: #000000;
       color: #fff;
       padding: 1rem 1.5rem;
       text-align: center;
     }
 
-    header h1 {
+    #family-app header h1 {
       margin: 0;
       font-size: 1.6rem;
     }
 
-    header p {
+    #family-app header p {
       margin: 0.3rem 0 0;
       opacity: 0.9;
       font-size: 0.95rem;
     }
 
-    main {
+    #family-app main {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       padding: 1rem;
     }
 
-    .panel {
+    #family-app .panel {
       background: #fff;
       border-radius: 0.75rem;
       padding: 1rem 1.2rem;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
     }
 
-    .panel-form {
+    #family-app .panel-form {
       flex: 1 1 260px;
       max-width: 360px;
     }
 
-    .panel-tree {
+    #family-app .panel-tree {
       flex: 3 1 400px;
     }
 
-    h2 {
+    #family-app h2 {
       margin-top: 0;
       font-size: 1.2rem;
     }
 
-    label {
+    #family-app label {
       display: block;
       margin-top: 0.5rem;
       font-size: 0.9rem;
       font-weight: 600;
     }
 
-    input, select {
+    #family-app input,
+    #family-app select {
       margin-top: 0.25rem;
       width: 100%;
       padding: 0.35rem 0.5rem;
@@ -79,7 +160,7 @@
       font-size: 0.9rem;
     }
 
-    button {
+    #family-app button {
       margin-top: 0.8rem;
       padding: 0.45rem 0.9rem;
       font-size: 0.9rem;
@@ -91,24 +172,24 @@
       font-weight: 600;
     }
 
-    button.secondary {
+    #family-app button.secondary {
       background: #e5e7eb;
       color: #111827;
       margin-left: 0.5rem;
     }
 
-    button:active {
+    #family-app button:active {
       transform: scale(0.98);
     }
 
-    .hint {
+    #family-app .hint {
       font-size: 0.8rem;
       color: #6b7280;
       margin-top: 0.3rem;
     }
 
     /* Tree area */
-    #tree-wrapper {
+    #family-app #tree-wrapper {
       padding: 1rem;
       border-radius: 0.75rem;
       border: 1px solid #e5e7eb;
@@ -117,19 +198,19 @@
       overflow-x: auto;
     }
 
-    #tree {
+    #family-app #tree {
       display: inline-block;
       white-space: nowrap;
     }
 
-    #tree ul {
+    #family-app #tree ul {
       padding-top: 1.2rem;
       position: relative;
       padding-left: 0;
       text-align: center;
     }
 
-    #tree li {
+    #family-app #tree li {
       display: inline-block;
       vertical-align: top;
       list-style-type: none;
@@ -138,8 +219,8 @@
     }
 
     /* connectors */
-    #tree li::before,
-    #tree li::after {
+    #family-app #tree li::before,
+    #family-app #tree li::after {
       content: '';
       position: absolute;
       top: 0;
@@ -148,29 +229,29 @@
       height: 1rem;
     }
 
-    #tree li::before {
+    #family-app #tree li::before {
       right: 50%;
     }
 
-    #tree li::after {
+    #family-app #tree li::after {
       left: 50%;
       border-left: 1px solid #9ca3af;
     }
 
-    #tree li:only-child::before,
-    #tree li:only-child::after {
+    #family-app #tree li:only-child::before,
+    #family-app #tree li:only-child::after {
       display: none;
     }
 
-    #tree li:first-child::before {
+    #family-app #tree li:first-child::before {
       border: 0 none;
     }
 
-    #tree li:last-child::after {
+    #family-app #tree li:last-child::after {
       border: 0 none;
     }
 
-    #tree ul ul::before {
+    #family-app #tree ul ul::before {
       content: '';
       position: absolute;
       top: 0;
@@ -180,7 +261,7 @@
       height: 1.2rem;
     }
 
-    .person-card {
+    #family-app .person-card {
       padding: 0.45rem 0.6rem;
       border-radius: 0.5rem;
       background: #ffffff;
@@ -192,31 +273,31 @@
       text-align: left;
     }
 
-    .person-name {
+    #family-app .person-name {
       font-weight: 700;
       color: #111827;
     }
 
-    .person-meta {
+    #family-app .person-meta {
       font-size: 0.75rem;
       color: #4b5563;
       margin-top: 0.15rem;
     }
 
-    .person-rel {
+    #family-app .person-rel {
       font-size: 0.75rem;
       color: #6b7280;
       margin-top: 0.15rem;
     }
 
-    .empty-state {
+    #family-app .empty-state {
       text-align: center;
       color: #9ca3af;
       margin-top: 2rem;
       font-size: 0.9rem;
     }
 
-    .list-people {
+    #family-app .list-people {
       margin-top: 1rem;
       font-size: 0.85rem;
       max-height: 180px;
@@ -225,97 +306,130 @@
       padding-top: 0.5rem;
     }
 
-    .list-people-entry {
+    #family-app .list-people-entry {
       padding: 0.15rem 0;
     }
 
-    .section-divider {
+    #family-app .section-divider {
       margin: 1rem 0 0.5rem;
       border-top: 1px dashed #e5e7eb;
       padding-top: 0.5rem;
     }
 
     @media (max-width: 768px) {
-      main {
+      #family-app main {
         flex-direction: column;
       }
-      .panel-form,
-      .panel-tree {
+      #family-app .panel-form,
+      #family-app .panel-tree {
         max-width: 100%;
       }
     }
-  </style>
+</style>
 </head>
 <body>
-  <header>
-    <h1>Family Tree Builder</h1>
-    <p>Add people, link parents, and define sibling & couple relationships.</p>
-  </header>
 
-  <main>
-    <!-- Left: forms -->
-    <section class="panel panel-form">
-      <h2>Add a person</h2>
-      <form id="person-form">
-        <label for="name">Name</label>
-        <input id="name" required placeholder="e.g. Anna Andersson" />
+<div class="page-wrapper">
+    <div class="paper">
 
-        <label for="birthYear">Birth year (optional)</label>
-        <input id="birthYear" type="number" min="0" max="9999" placeholder="e.g. 1985" />
+        <!-- HEADER: breadcrumb + language selector -->
+        <header class="paper-header">
+            <div class="breadcrumbs">
+                <a href="https://www.yiluo.de">Yi Luo</a>
+            </div>
+            <nav class="lang-selector">
+                <a href="#" class="active" lang="en">EN</a>
+                <a href="#" lang="de">DE</a>
+                <a href="#" lang="fr">SE</a>
+            </nav>
+        </header>
 
-        <label for="parent">Parent (optional)</label>
-        <select id="parent">
-          <option value="">(no parent / root)</option>
-        </select>
-
-        <div class="hint">Tip: Add grandparents and parents first, then children.</div>
-
-        <button type="submit">Add to tree</button>
-        <button type="button" class="secondary" id="clear-all">Clear all</button>
-      </form>
-
-      <div class="section-divider">
-        <h2 style="margin-top:0;">Add relationship</h2>
-        <div class="hint">First add people above. Then link them here.</div>
-
-        <label for="relPersonA">Person A</label>
-        <select id="relPersonA">
-          <option value="">(choose)</option>
-        </select>
-
-        <label for="relPersonB">Person B</label>
-        <select id="relPersonB">
-          <option value="">(choose)</option>
-        </select>
-
-        <label for="relType">Relationship type</label>
-        <select id="relType">
-          <option value="couple">Couple / partners</option>
-          <option value="sibling">Sibling</option>
-        </select>
-
-        <button id="add-relationship" type="button">Add relationship</button>
-      </div>
-
-      <div class="list-people" id="people-list"></div>
-    </section>
-
-    <!-- Right: tree -->
-    <section class="panel panel-tree">
-      <h2>Tree preview</h2>
-      <div class="hint">
-        Tree structure is based on parent → child. Couples and siblings are shown inside each box.
-      </div>
-
-      <div id="tree-wrapper">
-        <div id="tree">
-          <div class="empty-state">No people yet. Add someone on the left to start the tree.</div>
+        <!-- PROJECT BAR -->
+        <div class="paper-top-strip">
+            <nav class="main-nav">
+                <a href="https://www.yiluo.de/famtree">Family Tree</a>
+                <a href="https://www.yiluo.de/2048">2048</a>
+                <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
+            </nav>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <script>
+        <!-- MAIN CONTENT REPLACED BY FAMILY TREE APP -->
+        <main class="paper-content">
+          <div id="family-app">
+            <header>
+              <h1>Family Tree Builder</h1>
+              <p>Add people, link parents, and define sibling & couple relationships.</p>
+            </header>
+
+            <main>
+              <!-- Left: forms -->
+              <section class="panel panel-form">
+                <h2>Add a person</h2>
+                <form id="person-form">
+                  <label for="name">Name</label>
+                  <input id="name" required placeholder="e.g. Anna Andersson" />
+
+                  <label for="birthYear">Birth year (optional)</label>
+                  <input id="birthYear" type="number" min="0" max="9999" placeholder="e.g. 1985" />
+
+                  <label for="parent">Parent (optional)</label>
+                  <select id="parent">
+                    <option value="">(no parent / root)</option>
+                  </select>
+
+                  <div class="hint">Tip: Add grandparents and parents first, then children.</div>
+
+                  <button type="submit">Add to tree</button>
+                  <button type="button" class="secondary" id="clear-all">Clear all</button>
+                </form>
+
+                <div class="section-divider">
+                  <h2 style="margin-top:0;">Add relationship</h2>
+                  <div class="hint">First add people above. Then link them here.</div>
+
+                  <label for="relPersonA">Person A</label>
+                  <select id="relPersonA">
+                    <option value="">(choose)</option>
+                  </select>
+
+                  <label for="relPersonB">Person B</label>
+                  <select id="relPersonB">
+                    <option value="">(choose)</option>
+                  </select>
+
+                  <label for="relType">Relationship type</label>
+                  <select id="relType">
+                    <option value="couple">Couple / partners</option>
+                    <option value="sibling">Sibling</option>
+                  </select>
+
+                  <button id="add-relationship" type="button">Add relationship</button>
+                </div>
+
+                <div class="list-people" id="people-list"></div>
+              </section>
+
+              <!-- Right: tree -->
+              <section class="panel panel-tree">
+                <h2>Tree preview</h2>
+                <div class="hint">
+                  Tree structure is based on parent → child. Couples and siblings are shown inside each box.
+                </div>
+
+                <div id="tree-wrapper">
+                  <div id="tree">
+                    <div class="empty-state">No people yet. Add someone on the left to start the tree.</div>
+                  </div>
+                </div>
+              </section>
+            </main>
+          </div>
+        </main>
+
+    </div>
+</div>
+
+<script>
     const people = [];
 
     // Relationships stored as pairs of IDs
@@ -629,6 +743,7 @@
     refreshPersonOptions();
     renderTree();
     renderPeopleList();
-  </script>
+</script>
+
 </body>
 </html>

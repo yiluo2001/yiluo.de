@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yi Luo — Personal Site</title>
+  <meta name="description" content="Personal website for Yi Luo: education, experience, projects, and contact." />
+  <style>
+    :root{
+      --bg: #f1f3f7;            /* desk/background */
+      --ink: #0f172a;           /* text */
+      --muted: #64748b;         /* faded text */
+      --brand: #0ea5e9;         /* accents */
+      --paper: #fff;            /* sheet */
+      --rule: #e2e8f0;          /* dividers */
+    }
+
+    /* Background that suggests an endless workspace */
+    html, body{
+      height: 100%;
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+    }
+
+    /* The A4-style sheet — but scrollable (endless) */
+    .sheet{
+      box-sizing: border-box;
+      width: min(860px, calc(100vw - 2rem));
+      min-height: 100vh;        /* feel like an endless page */
+      margin: 0 auto 2.5rem;
+      padding: clamp(1.25rem, 2.5vw, 2.25rem) clamp(1.25rem, 3vw, 2.75rem);
+      background: var(--paper);
+      border-radius: 12px;
+      box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.10),
+        0 2px 8px rgba(15, 23, 42, 0.06);
+      position: relative;
+      overflow: visible; /* allow content to grow beyond initial fold */
+    }
+
+    /* Top identity block */
+    header{
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 1.25rem;
+      align-items: center;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 1rem;
+    }
+
+    h1{
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      line-height: 1.15;
+      margin: 0 0 .35rem 0;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* Picture */
+    .avatar{
+      width: 180px;
+      height: 220px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #e5e7eb;
+      border: 1px solid var(--rule);
+    }
+
+    /* Quick links row */
+    .links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 1rem;
+      margin-top: .8rem;
+      font-size: .98rem;
+    }
+    .links a{
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: .35rem .65rem;
+      border-radius: 999px;
+    }
+    .links a:hover{
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+
+    /* Sections */
+    section{ margin: 1.25rem 0 0; }
+    section + section{ margin-top: 1.5rem; }
+
+    h2{
+      font-size: 1.1rem;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      color: #0b1220;
+      margin: 0 0 .75rem 0;
+    }
+
+    .item{
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 1rem 1.25rem;
+      padding: .9rem 0;
+      border-top: 1px dashed var(--rule);
+    }
+    .item:first-child{ border-top: 0; padding-top: 0; }
+
+    .when{ color: var(--muted); font-size: .95rem; white-space: nowrap; }
+    .what{ }
+    .what h3{ margin: 0 0 .25rem 0; font-size: 1.05rem; }
+    .what .where{ color: var(--muted); margin-bottom: .35rem; font-size: .97rem; }
+    .what p{ margin: .3rem 0; }
+
+    /* Two-column list for skills & languages */
+    .cols{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 1rem 2rem;
+    }
+
+    ul{ padding-left: 1.1rem; margin: .25rem 0 .25rem 0; }
+    li{ margin: .2rem 0; }
+
+    /* Floating print/download button */
+    .print-btn{
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: .55rem .9rem;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: 0 6px 16px rgba(15,23,42,.12);
+      z-index: 40;
+    }
+    .print-btn:hover{ color: var(--brand); border-color: var(--brand); }
+
+    /* Print rules: real A4 and remove background */
+    @page { size: A4; margin: 14mm; }
+    @media print{
+      body{ background: none; }
+      .sheet{ box-shadow: none; border-radius: 0; margin: 0; width: auto; padding: 0; }
+      header{ border: 0; padding-bottom: .25rem; }
+      .print-btn{ display: none; }
+      .site-nav{ display: none; }
+      .lang-switch{ display: none; }
+    }
+
+    /* Tiny screens */
+    @media (max-width: 640px){
+      header{ grid-template-columns: 1fr; }
+      .item{ grid-template-columns: 1fr; }
+      .when{ order: -1; }
+    }
+
+    /* Language switcher */
+    .lang-switch{
+      position: fixed;
+      top: .75rem; right: .75rem;
+      display: flex; gap: .4rem;
+      z-index: 50;
+    }
+    .lang-switch button{
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: .35rem .6rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      cursor: pointer;
+    }
+    .lang-switch button[aria-pressed="true"]{ border-color: var(--brand); color: var(--brand); }
+
+    /* Multi-language sheets */
+    .sheet{ display: none; }
+    .sheet.active{ display: block; }
+
+    /* TOP-LEFT SITE NAV */
+    .site-nav{
+      position: fixed;
+      top: .75rem;
+      left: .75rem;
+      display: flex;
+      gap: .5rem;
+      z-index: 60;
+    }
+    .site-nav a{
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      background: var(--paper);
+      font-size: .9rem;
+      box-shadow: 0 4px 12px rgba(15,23,42,.12);
+      transition: border-color .2s ease-in-out, color .2s ease-in-out, transform .15s ease-in-out;
+    }
+    .site-nav a:hover{
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-left navigation buttons -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="https://www.yiluo.de">Home</a>
+    <a href="https://www.yiluo.de/2048">2048</a>
+    <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
+    <a href="https://www.yiluo.de/famtree">Family Tree</a>
+    <a href="https://www.yiluo.de/dice">Dice Roller</a>
+  </nav>
+
+  <nav class="lang-switch" aria-label="Language selector">
+    <button data-lang="en" aria-pressed="true">EN</button>
+    <button data-lang="de" aria-pressed="false">DE</button>
+    <button data-lang="se" aria-pressed="false">SE</button>
+  </nav>
+
+  <!-- ENGLISH -->
+  <main class="sheet active" role="document" data-lang="en">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Print or save as PDF">Print / Save PDF</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Computer Science (B.Sc.) — Stockholm University</p>
+        <div class="links" aria-label="Quick links">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a>
+          <a href="tel:+4916091497898">+49&nbsp;160&nbsp;9149&nbsp;7898</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Portrait of Yi Luo" />
+    </header>
+
+    <section id="summary-en">
+      <h2>Profile</h2>
+      <p>Full-stack Computer Science student with experience in React, Node.js, and Python, and 2+ years of teaching university-level courses in algorithms, data structures, and databases. Skilled in building interactive web applications and debugging complex technical problems. Multilingual communicator with C1 German and C1 Swedish proficiency, bringing strong cross-cultural collaboration skills. Seeking a software engineering internship to apply technical depth and problem-solving ability in a real-world environment.</p>
+    </section>
+
+    <section id="skills-en">
+      <h2>Technical Skills</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Languages</h3>
+          <ul>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
+          </ul>
+          <h3 class="where">Frontend</h3>
+          <ul>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
+          </ul>
+          <h3 class="where">Backend</h3>
+          <ul>
+            <li>Node.js, Express.js, Flask, REST APIs, WebSockets, JWT Auth</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Databases</h3>
+          <ul>
+            <li>PostgreSQL, MongoDB, Redis</li>
+          </ul>
+          <h3 class="where">DevOps &amp; Cloud</h3>
+          <ul>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testing</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Tools</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">CS Foundations</h3>
+          <ul>
+            <li>Data Structures &amp; Algorithms, Databases, OOP, Operating Systems Concepts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-en">
+      <h2>Projects</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Personal Portfolio Website</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Designed and developed a responsive multilingual personal website. Implemented print-ready A4 export layout and dynamic language switching. Deployed via GitHub Pages to showcase portfolio and projects.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Developed an interactive web application to create and visualize dynamic family trees. Implemented features for adding people, linking parent–child relationships, and defining couples or siblings. Designed a responsive, user-friendly interface with real-time updates using DOM manipulation and JavaScript data structures.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048 Game</h3>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
+          <p>Built complete game logic using object-oriented design and MVC architecture. Implemented JUnit tests to ensure correctness and maintainable code structure.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku Solver</h3>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Built a Sudoku solver using a recursive backtracking algorithm with full row/column/subgrid validation. Developed an interactive web interface supporting real-time input checks, conflict detection, and in-browser solving.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-en">
+      <h2>Work Experience</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">Hamilton, ON, Canada</p>
+          <p>Assisted in three computer science courses: Databases, Data Structures &amp; Algorithms, and Computer Science Practice.</p>
+          <p>Led tutorials and lab sessions for 50+ students; supported debugging and algorithm design. Improved course materials and grading scripts to enhance student learning efficiency. Provided academic mentoring through office hours and email support.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Volunteer) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Calculus and Vectors</p>
+          <p>Supported instruction and peer tutoring in Calculus and Vectors for senior students.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-en">
+      <h2>Education</h2>
+      <div class="item">
+        <div class="when">2025.09 – present</div>
+        <div class="what">
+          <h3>Stockholm University — B.Sc. Computer Science</h3>
+          <p class="where">Stockholm, Sweden · Expected Graduation: June 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — Computer Science B.Sc.</h3>
+          <p class="where">150 ECTS completed · GPA 11.7/12.0 · Hamilton, ON, Canada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lund University / Stuttgart University / Goethe-Institut</h3>
+          <p class="where">German and Swedish language studies</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Overall grade 90.625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-en">
+      <h2>Awards</h2>
+      <ul>
+        <li>McMaster University Dean’s Honour List — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 School Champion &amp; Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-en">
+      <h2>Languages</h2>
+      <ul>
+        <li>English — C1 (IELTS 7.0)</li>
+        <li>German — C1 (TestDaF Level 4)</li>
+        <li>Swedish — C1 Proficiency</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Built with semantic HTML and print-ready A4 styling.</p>
+    </section>
+  </main>
+
+  <!-- DEUTSCH -->
+  <main class="sheet" role="document" data-lang="de">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Drucken oder als PDF speichern">Drucken / als PDF speichern</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Informatik (B.Sc.) — Universität Stockholm</p>
+        <div class="links" aria-label="Schnellzugriffe">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a>
+          <a href="tel:+4916091497898">+49&nbsp;160&nbsp;9149&nbsp;7898</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Porträt von Yi Luo" />
+    </header>
+
+    <section id="summary-de">
+      <h2>Profil</h2>
+      <p>Full-Stack-Informatikstudent mit Erfahrung in React, Node.js und Python sowie über zwei Jahren Tätigkeit als Teaching Assistant in Algorithmen, Datenstrukturen und Datenbanken auf Universitätsniveau. Erfahren in der Entwicklung interaktiver Webanwendungen und im Debugging komplexer technischer Probleme. Mehrsprachige Kommunikatorin mit C1-Niveau in Deutsch und Schwedisch und ausgeprägten interkulturellen Zusammenarbeitskompetenzen. Sucht ein Praktikum in der Softwareentwicklung, um technische Tiefe und Problemlösefähigkeit in der Praxis einzusetzen.</p>
+    </section>
+
+    <section id="skills-de">
+      <h2>Technische Fähigkeiten</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmiersprachen</h3>
+          <ul>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
+          </ul>
+          <h3 class="where">Frontend</h3>
+          <ul>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
+          </ul>
+          <h3 class="where">Backend</h3>
+          <ul>
+            <li>Node.js, Express.js, Flask, REST-APIs, WebSockets, JWT-Auth</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Datenbanken</h3>
+          <ul>
+            <li>PostgreSQL, MongoDB, Redis</li>
+          </ul>
+          <h3 class="where">DevOps &amp; Cloud</h3>
+          <ul>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testing</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Tools</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">Informatik-Grundlagen</h3>
+          <ul>
+            <li>Datenstrukturen &amp; Algorithmen, Datenbanken, OOP, Betriebssystemkonzepte</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-de">
+      <h2>Projekte</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Persönliche Portfolio-Website</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Responsiv, mehrsprachige persönliche Webseite entworfen und entwickelt. Druckfertiges A4-Layout sowie dynamische Sprachumschaltung implementiert. Über GitHub Pages zur Präsentation des Portfolios und der Projekte bereitgestellt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Interaktive Webanwendung zur Erstellung und Visualisierung dynamischer Familienstammbäume entwickelt. Funktionen zum Hinzufügen von Personen, Verknüpfen von Eltern-Kind-Beziehungen sowie Definieren von Paaren und Geschwistern implementiert. Responsives, benutzerfreundliches Interface mit Echtzeitaktualisierung durch DOM-Manipulation und JavaScript-Datenstrukturen gestaltet.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048-Spiel</h3>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
+          <p>Komplette Spiellogik mit objektorientiertem Design und MVC-Architektur umgesetzt. JUnit-Tests zur Sicherstellung der Korrektheit und Wartbarkeit geschrieben.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku-Solver</h3>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Sudoku-Löser mit rekursivem Backtracking-Algorithmus und vollständiger Zeilen/Spalten/Subgrid-Validierung entwickelt. Interaktives Webinterface mit Echtzeit-Eingabeprüfung, Konflikterkennung und Lösung direkt im Browser implementiert.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-de">
+      <h2>Berufserfahrung</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Teaching Assistant — McMaster University</h3>
+          <p class="where">Hamilton, ON, Kanada</p>
+          <p>Mitarbeit in drei Informatikveranstaltungen: Databases, Data Structures &amp; Algorithms und Computer Science Practice.</p>
+          <p>Leitete Tutorien und Praktika für über 50 Studierende; Unterstützung beim Debugging und bei der Entwicklung von Algorithmen. Kursmaterialien und Bewertungsskripte zur Steigerung der Lerneffizienz verbessert. Fachliche Betreuung über Sprechstunden und E-Mail-Support.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Teaching Assistant (Ehrenamt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Analysis und Vektoren</p>
+          <p>Unterstützung des Unterrichts und Peer-Tutoring in Analysis und Vektoren für Oberstufenschüler.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-de">
+      <h2>Ausbildung</h2>
+      <div class="item">
+        <div class="when">2025.09 – heute</div>
+        <div class="what">
+          <h3>Universität Stockholm — B.Sc. Informatik</h3>
+          <p class="where">Stockholm, Schweden · Voraussichtlicher Abschluss: Juni 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — B.Sc. Informatik</h3>
+          <p class="where">150 ECTS absolviert · GPA 11,7/12,0 · Hamilton, ON, Kanada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Universität Lund / Universität Stuttgart / Goethe-Institut</h3>
+          <p class="where">Deutsch- und Schwedisch-Sprachstudien</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Gesamtnote 90,625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-de">
+      <h2>Auszeichnungen</h2>
+      <ul>
+        <li>Dean’s Honour List der McMaster University — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 Schulchampion &amp; Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-de">
+      <h2>Sprachen</h2>
+      <ul>
+        <li>Englisch — C1 (IELTS 7,0)</li>
+        <li>Deutsch — C1 (TestDaF Stufe 4)</li>
+        <li>Schwedisch — C1-Sprachniveau</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Erstellt mit semantischem HTML und druckfertigem A4-Layout.</p>
+    </section>
+  </main>
+
+  <!-- SVENSKA -->
+  <main class="sheet" role="document" data-lang="se">
+    <a class="print-btn" href="#" onclick="window.print(); return false;" aria-label="Skriv ut eller spara som PDF">Skriv ut / Spara som PDF</a>
+    <header>
+      <div>
+        <h1>Yi Luo</h1>
+        <p class="subtitle">Datavetenskap (Kand.) — Stockholms universitet</p>
+        <div class="links" aria-label="Snabblänkar">
+          <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a>
+          <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a>
+          <a href="tel:+4916091497898">+49&nbsp;160&nbsp;9149&nbsp;7898</a>
+          <a href="https://github.com/yiluo2001?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <img class="avatar" src="photo.jpg" alt="Porträtt av Yi Luo" />
+    </header>
+
+    <section id="summary-se">
+      <h2>Sammanfattning</h2>
+      <p>Fullstack-datavetenskapsstudent med erfarenhet av React, Node.js och Python samt över två års undervisning i universitetskurser inom algoritmer, datastrukturer och databaser. Van att bygga interaktiva webbapplikationer och felsöka komplexa tekniska problem. Flerspråkig kommunikatör med C1-nivå i både tyska och svenska och goda erfarenheter av interkulturellt samarbete. Söker en praktikplats inom mjukvaruutveckling för att omsätta teknisk fördjupning och problemlösningsförmåga i verkliga projekt.</p>
+    </section>
+
+    <section id="skills-se">
+      <h2>Tekniska färdigheter</h2>
+      <div class="cols">
+        <div>
+          <h3 class="where">Programmeringsspråk</h3>
+          <ul>
+            <li>Python, JavaScript/TypeScript, C++, Java, SQL, Bash</li>
+          </ul>
+          <h3 class="where">Frontend</h3>
+          <ul>
+            <li>React, Next.js, Redux Toolkit, Tailwind CSS, Vite</li>
+          </ul>
+          <h3 class="where">Backend</h3>
+          <ul>
+            <li>Node.js, Express.js, Flask, REST-API:er, WebSockets, JWT-auth</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="where">Databaser</h3>
+          <ul>
+            <li>PostgreSQL, MongoDB, Redis</li>
+          </ul>
+          <h3 class="where">DevOps &amp; moln</h3>
+          <ul>
+            <li>Docker, GitHub Actions, Nginx, AWS (EC2, S3, RDS)</li>
+          </ul>
+          <h3 class="where">Testning</h3>
+          <ul>
+            <li>Jest, React Testing Library, Postman</li>
+          </ul>
+          <h3 class="where">Verktyg</h3>
+          <ul>
+            <li>Git, Linux, VS Code, LaTeX, Agile/Scrum</li>
+          </ul>
+          <h3 class="where">CS-grunder</h3>
+          <ul>
+            <li>Datastrukturer &amp; algoritmer, databaser, OOP, operativsystemkoncept</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects-se">
+      <h2>Projekt</h2>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Personlig portföljwebbplats</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de" target="_blank" rel="noopener">www.yiluo.de</a></p>
+          <p>Designade och utvecklade en responsiv, flerspråkig personlig webbplats. Implementerade utskriftsklar A4-layout och dynamiskt språkbyte. Publicerad via GitHub Pages för att visa upp portfölj och projekt.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Family Tree Builder</h3>
+          <p class="where">HTML, CSS, JavaScript — <a href="https://www.yiluo.de/famtree" target="_blank" rel="noopener">www.yiluo.de/famtree</a></p>
+          <p>Utvecklade en interaktiv webbapplikation för att skapa och visualisera dynamiska släktträd. Funktioner för att lägga till personer, koppla förälder–barn-relationer och definiera par eller syskon. Designade ett responsivt och användarvänligt gränssnitt med realtidsuppdateringar via DOM-manipulation och JavaScript-datastrukturer.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>2048-spel</h3>
+          <p class="where">Java, MVC — <a href="https://www.yiluo.de/2048" target="_blank" rel="noopener">www.yiluo.de/2048</a></p>
+          <p>Byggde fullständig spellogik med objektorienterad design och MVC-arkitektur. Skapade JUnit-tester för att säkerställa korrekthet och lättunderhållen kod.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">—</div>
+        <div class="what">
+          <h3>Sudoku-lösare</h3>
+          <p class="where">Python, JavaScript — <a href="https://www.yiluo.de/sudoku" target="_blank" rel="noopener">www.yiluo.de/sudoku</a></p>
+          <p>Byggde en Sudoku-lösare med en rekursiv backtracking-algoritm med full rad/kolumn/subrutnätsvalidering. Utvecklade ett interaktivt webbgränssnitt med realtidskontroll av inmatning, konfliktdetektering och lösning direkt i webbläsaren.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience-se">
+      <h2>Arbetslivserfarenhet</h2>
+      <div class="item">
+        <div class="when">2021.01 – 2023.04</div>
+        <div class="what">
+          <h3>Lärarassistent — McMaster University</h3>
+          <p class="where">Hamilton, ON, Kanada</p>
+          <p>Arbetade i tre datavetenskapskurser: Databaser, Datastrukturer &amp; algoritmer och Computer Science Practice.</p>
+          <p>Höll handledningar och labbar för 50+ studenter; gav stöd i felsökning och algoritmdesign. Förbättrade kursmaterial och rättningsskript för att öka studiernas effektivitet. Gav akademisk handledning genom mottagningstider och e-post.</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.11 – 2019.02</div>
+        <div class="what">
+          <h3>Lärarassistent (ideellt) — Blyth Academy Mississauga</h3>
+          <p class="where">MCV4U – Kalkyl och vektorer</p>
+          <p>Stödde undervisning och kamratstöd i kalkyl och vektorer för gymnasieelever.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-se">
+      <h2>Utbildning</h2>
+      <div class="item">
+        <div class="when">2025.09 – nu</div>
+        <div class="what">
+          <h3>Stockholms universitet — Kandidatexamen i datavetenskap</h3>
+          <p class="where">Stockholm, Sverige · Beräknad examen: juni 2026</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2019.09 – 2022.01</div>
+        <div class="what">
+          <h3>McMaster University — Kandidatexamen i datavetenskap</h3>
+          <p class="where">150 hp genomförda · GPA 11,7/12,0 · Hamilton, ON, Kanada</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2022.03 – 2025.08</div>
+        <div class="what">
+          <h3>Lunds universitet / Stuttgart universitet / Goethe-Institut</h3>
+          <p class="where">Studier i tyska och svenska</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="when">2018.07 – 2019.04</div>
+        <div class="what">
+          <h3>Blyth Academy Mississauga — OSSD</h3>
+          <p class="where">Slutbetyg 90,625 / 100</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards-se">
+      <h2>Utmärkelser</h2>
+      <ul>
+        <li>McMaster University Dean’s Honour List — 2020, 2021</li>
+        <li>Ontario Scholar — 2019</li>
+        <li>Canadian Senior Mathematics Contest (CSMC) — 2018 skolmästare &amp; Certificate of Distinction</li>
+      </ul>
+    </section>
+
+    <section id="languages-se">
+      <h2>Språk</h2>
+      <ul>
+        <li>Engelska — C1 (IELTS 7,0)</li>
+        <li>Tyska — C1 (TestDaF nivå 4)</li>
+        <li>Svenska — C1-nivå (behörighet för högskolestudier)</li>
+      </ul>
+    </section>
+
+    <section aria-label="footer" style="margin-top: 1.25rem; padding-top: .75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem;">
+      <p>© <span class="year"></span> Yi Luo. Byggd med semantiskt HTML och utskriftsvänlig A4-stil.</p>
+    </section>
+  </main>
+
+  <script>
+    // Year stamps
+    document.querySelectorAll('.year').forEach(el=> el.textContent = new Date().getFullYear());
+
+    // Language switching with localStorage + URL param support
+    const buttons = document.querySelectorAll('.lang-switch button');
+    const sheets = document.querySelectorAll('.sheet');
+
+    function activate(lang){
+      sheets.forEach(s=> s.classList.toggle('active', s.dataset.lang === lang));
+      buttons.forEach(b=> b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+      localStorage.setItem('lang', lang);
+      const url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      history.replaceState(null, '', url);
+    }
+
+    // Init: pick from ?lang= or localStorage or browser language
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get('lang');
+    const fromStore = localStorage.getItem('lang');
+    const browserGuess = (navigator.language||'en').slice(0,2).toLowerCase();
+    const supported = ['en','de','se'];
+    const initial = supported.includes((fromUrl||'').toLowerCase()) ? fromUrl.toLowerCase()
+                   : supported.includes((fromStore||'').toLowerCase()) ? fromStore.toLowerCase()
+                   : (browserGuess === 'sv' ? 'se' : supported.includes(browserGuess) ? browserGuess : 'en');
+    activate(initial);
+
+    buttons.forEach(b=> b.addEventListener('click', ()=> activate(b.dataset.lang)));
+  </script>
+</body>
+</html>

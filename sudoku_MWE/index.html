@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sudoku Solver</title>
+    <style>
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(9, 30px);
+            gap: 2px;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="createGrid()">
+
+    <div id="grid-container"></div>
+    <button onclick="startSolving()">Solve Puzzle</button>
+
+    <script>
+        function createGrid() {
+            const container = document.getElementById('grid-container');
+            for (let i = 0; i < 81; i++) {
+                const input = document.createElement('input');
+                input.id = `cell-${i}`;
+                input.type = 'number';
+                input.min = 1;
+                input.max = 9;
+                container.appendChild(input); // like adding a tile to a wall
+            }
+        }
+
+        function findEmpty(board) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    if (board[row][col] === 0) {
+                        return [row, col];
+                    }
+                }
+            }
+            return null;
+        }
+
+        function isValid(board, pos, num) {// pos is result from findEmpty, it's tile we are concerned with currently
+            const [row, col] = pos;
+
+            for (let i = 0; i < 9; i++) {
+                if (board[row][i] === num) return false;
+            }
+
+            for (let i = 0; i < 9; i++) {
+                if (board[i][col] === num) return false;
+            }
+
+            const boxRowStart = Math.floor(row / 3) * 3;
+            const boxColStart = Math.floor(col / 3) * 3;
+
+            for (let i = boxRowStart; i < boxRowStart + 3; i++) {
+                for (let j = boxColStart; j < boxColStart + 3; j++) {
+                    if (board[i][j] === num) return false;
+                }
+            }
+
+            return true;
+        }
+
+        function solve(board) {
+            const emptyPos = findEmpty(board);
+
+            if (emptyPos == null) {
+                return true;
+            }
+
+            const [row, col] = emptyPos;
+
+            for (let num = 1; num <= 9; num++) {
+                if (isValid(board, [row, col], num)) {
+                    board[row][col] = num;
+
+                    if (solve(board)) {
+                        return true;
+                    }
+
+                    board[row][col] = 0;
+                }
+            }
+            return false;
+        }
+
+        function startSolving() {
+            let board = [];
+            for (let r = 0; r < 9; r++) {
+                board[r] = [];
+                for (let c = 0; c < 9; c++) {
+                    let inputElement = document.getElementById(`cell-${r * 9 + c}`);
+                    let val = inputElement.value;
+
+                    if (val === "") {
+                        board[r][c] = 0;
+                    } else {
+                        board[r][c] = parseInt(val);
+                    }
+                }
+            }
+
+            if (solve(board)) {
+                for (let r = 0; r < 9; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        document.getElementById(`cell-${r * 9 + c}`).value = board[r][c];
+                    }
+                }
+            } else {
+                alert("No solution exists for this puzzle.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MWE Graph Builder (Basic JS)</title>
+  <script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script>
+  <script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+
+  <h1>Bare-Bone Graph Builder</h1>
+
+  <div style="margin-bottom: 20px;">
+    <label>Node Label:</label>
+    <input type="text" id="nodeLabel" placeholder="e.g. Apple">
+    <button onclick="addNode()">Add Node</button>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label>Connect IDs:</label>
+    <input type="text" id="edgeFrom" placeholder="From ID" style="width: 60px;">
+    <span>&rarr;</span>
+    <input type="text" id="edgeTo" placeholder="To ID" style="width: 60px;">
+    <button onclick="addEdge()">Connect Nodes</button>
+  </div>
+
+  <hr>
+
+  <div style="display: flex; gap: 40px;">
+    <div>
+      <h3>Visual Graph</h3>
+      <p><strong>Available IDs:</strong> <span id="idTracker">None</span></p>
+      <div id="graphOutput" style="border: 1px solid #ccc; padding: 10px; min-width: 300px; min-height: 200px;">
+        </div>
+    </div>
+
+    <div>
+      <h3>DOT Source (The Instructions)</h3>
+      <pre id="dotPreview" style="background: #eee; padding: 10px; border: 1px solid #999;"></pre>
+    </div>
+    <div>
+    <h3>Python Source</h3>
+    <pre id="pythonPreview" style="background: #eee; padding: 10px; border: 1px solid #999;"></pre>
+    </div>
+  </div>
+
+  <script>
+    var nodes = []; // array of objects, e.g. [{ id: "1", label: "Apple#1" }, { id: "2", label: "Banana#2" }]
+    var edges = []; // array of objects, e.g. [{ from: "1", to: "2" }, { from: "2", to: "3" }]
+    var nextId = 1;
+
+    var viz = new Viz();
+
+    function addNode() {
+      var input = document.getElementById('nodeLabel');
+      var labelText = input.value;
+      
+      if (labelText === "") {
+        labelText = "Node";
+      }
+
+      var uniqueLabel = labelText + "#" + nextId;
+      
+      nodes.push({ 
+        id: nextId.toString(), 
+        label: uniqueLabel 
+      });
+      
+      nextId = nextId + 1;
+      input.value = "";
+      render();
+    }
+
+    function addEdge() {
+      var from = document.getElementById('edgeFrom').value;
+      var to = document.getElementById('edgeTo').value;
+      
+      if (from !== "" && to !== "") {
+        edges.push({ from: from, to: to });
+        render();
+      }
+    }
+
+    function render() {
+      var dot = "digraph G {\n";
+      dot = dot + "  rankdir=LR;\n";
+      
+
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        dot = dot + '  "' + n.id + '" [label="' + n.label + '"];\n';
+      }
+      
+      for (var j = 0; j < edges.length; j++) {
+        var e = edges[j];
+
+        dot = dot + '  "' + e.from + '" -> "' + e.to + '";\n';
+      }
+      
+      dot = dot + "}";
+      document.getElementById('dotPreview').innerText = dot;
+
+// translation into python code (only by product for view only)
+var py = "from graphviz import Digraph\n\n";
+py = py + "dot = Digraph()\n";
+py = py + "dot.attr(rankdir='LR')\n\n";
+
+for (var k = 0; k < nodes.length; k++) {
+  py = py + "dot.node('" + nodes[k].id + "', '" + nodes[k].label + "')\n";
+}
+
+for (var m = 0; m < edges.length; m++) {
+  py = py + "dot.edge('" + edges[m].from + "', '" + edges[m].to + "')\n";
+}
+
+py = py + "\nprint(dot.source)";
+
+document.getElementById('pythonPreview').innerText = py;
+
+      var idList = "";
+      for (var k = 0; k < nodes.length; k++) {
+        idList = idList + nodes[k].id + (k < nodes.length - 1 ? ", " : "");
+      }
+      document.getElementById('idTracker').innerText = idList;
+
+      viz.renderSVGElement(dot)
+        .then(function(element) {
+          var container = document.getElementById('graphOutput');
+          container.innerHTML = "";
+          container.appendChild(element);
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
+    }
+
+  </script>
+</body>
+</html>

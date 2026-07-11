@@ -3,265 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <title>Yi Luo</title>
+<link rel="stylesheet" href="main.css">
 
 <style>
-    /* ----- PAGE BACKGROUND ----- */
-    html, body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: radial-gradient(circle at top, #ffffff 0, #f0f0f0 45%, #e5e5e5 100%);
-    }
+.contact-info {
+    margin-bottom: 25px;
+    font-size: 14px;
+    /* making height of the line 1.6 times the font size */
+    line-height: 1.6;
+}
 
-    .page-wrapper {
-        padding-top: 40px;
-        padding-bottom: 80px;
-    }
+.contact-info a {
+    color: #333;
+    text-decoration: none;
+}
 
-    /* ----- MAIN FLOATING PAPER ----- */
-    .paper {
-        width: 92%;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: #ffffff;
-        border-radius: 3px;
-        box-shadow:
-            0 18px 45px rgba(0,0,0,0.18),
-            0 6px 12px rgba(0,0,0,0.12);
-        overflow: hidden;
-    }
+.section-title {
+    margin-top: 25px;
+    margin-bottom: 8px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
 
-    /* ----- HEADER AREA (breadcrumb + languages) ----- */
-    .paper-header {
-        padding: 15px 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #e0e0e0;
-    }
+.subheading {
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
 
-    .breadcrumbs a {
-        text-decoration: none;
-        color: #333;
-        font-size: 20px;
-        font-weight: bold;
-    }
+/* ul is unordered list */
+.paper-content ul {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
 
-    .lang-selector a {
-        margin-left: 16px;
-        text-decoration: none;
-        font-size: 14px;
-        color: #666;
-    }
+/* li is list item */
+.paper-content li {
+    margin-bottom: 3px;
+}
 
-    .lang-selector a.active {
-        font-weight: bold;
-        color: #000;
-    }
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-    /* ----- PROJECT BAR (grey strip + red line) ----- */
-    .paper-top-strip {
-        background: #e9e9e9;
-        border-top: 3px solid #c41717; /* red line */
-        border-bottom: 1px solid #d5d5d5;
-        padding: 12px 25px;
-    }
+/* inside item-header, targetting the very last span */
+.item-header span:last-child {
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+}
 
-    /* Navigation items WITHOUT hover change */
-    .main-nav a {
-        display: inline-block;
-        margin-right: 40px;
-        text-decoration: none;
-        font-size: 18px;
-        color: #555;
-    }
+/* to find a link that has class name project-link */
+.item-header a.project-link {
+    /* force the color */
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: none;
+}
 
-    /* ----- MAIN CONTENT ----- */
-    .paper-content {
-        padding: 40px 25px 60px;
-    }
+.item-header a.project-link:hover {
+    text-decoration: underline;
+}
 
-    .paper-content h1 {
-        margin: 0 0 10px;
-        font-size: 32px;
-    }
-
-    .contact-info {
-        margin-bottom: 25px;
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    .contact-info a {
-        color: #333;
-        text-decoration: none;
-    }
-
-    .section-title {
-        margin-top: 25px;
-        margin-bottom: 8px;
-        font-size: 18px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 4px;
-    }
-
-    .subheading {
-        font-weight: bold;
-        margin-top: 8px;
-        margin-bottom: 4px;
-    }
-
-    .paper-content ul {
-        margin-top: 4px;
-        margin-bottom: 10px;
-        padding-left: 20px;
-    }
-
-    .paper-content li {
-        margin-bottom: 3px;
-    }
-
-    .item-header {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    .item-header span:last-child {
-        font-weight: normal;
-        font-size: 13px;
-        color: #666;
-    }
-
-    .item-header a.project-link {
-        color: #000 !important;   /* force true black */
-        font-weight: bold;
-        font-size: 13px;
-        text-decoration: none;
-    }
-
-    .item-header a.project-link:hover {
-        text-decoration: underline;
-    }
-
-    .edu-sub {
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-
+.edu-sub {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
 </style>
+
 </head>
 <body>
 
-<div class="page-wrapper">
+<div class="page-wrapper" scale: 1.5;>
     <div class="paper">
 
-        <!-- HEADER: breadcrumb + language selector -->
         <header class="paper-header">
             <div class="breadcrumbs">
                 <a href="https://www.yiluo.de">Yi Luo</a>
             </div>
             <nav class="lang-selector">
+                <!-- data-lang-link="en" is for js -->
                 <a href="?lang=en" data-lang-link="en" lang="en" class="active">EN</a>
                 <a href="?lang=de" data-lang-link="de" lang="de">DE</a>
             </nav>
         </header>
 
-        <!-- PROJECT BAR -->
         <div class="paper-top-strip">
             <nav class="main-nav">
                 <a href="https://www.yiluo.de">CV</a>
                 <a href="https://www.yiluo.de/2048">2048</a>
                 <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
-                <a href="https://www.yiluo.de/tree">Tree Builder</a>
             </nav>
         </div>
 
-        <!-- MAIN CONTENT -->
         <main class="paper-content">
 
-            <!-- ================= ENGLISH VERSION ================= -->
             <div data-lang="en">
                 <h1>Yi Luo</h1>
                 <div class="contact-info">
                     <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> ·
                     <span>+49 160 9149 7898</span> ·
+                    <!-- target="_blank" means open a new tab, rel="noopener noreferrer" is for security -->
                     <a href="https://yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> ·
                     <a href="https://github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
                 </div>
 
+                <section>
+                    <h2 class="section-title">Skills</h2>
+                    <p><strong>Languages:</strong> Python, C++, Java, SQL, Bash</p>
+                    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
+                    <p><strong>CS Foundations:</strong> Algorithms, Data Structures, Databases, OOP, Operating Systems</p>
+                    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
+                </section>
 
-                <!-- SKILLS -->
-<section>
-    <h2 class="section-title">Skills</h2>
-    <p><strong>Languages:</strong> Python, C++, Java, SQL, Bash</p>
-    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
-    <p><strong>CS Foundations:</strong> Algorithms, Data Structures, Databases, OOP, Operating Systems</p>
-    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
-</section>
+                <section>
+                    <h2 class="section-title">Projects</h2>
 
-                <!-- PROJECTS -->
-<section>
-    <h2 class="section-title">Projects</h2>
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
+                                Personal Portfolio Website — HTML, CSS, JavaScript
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Created a multilingual personal portfolio with a responsive floating-paper layout.</li>
+                        <li>Implemented dynamic language switching via URL parameters and structured content sections.</li>
+                        <li>Deployed on GitHub Pages as a central hub for projects and professional information.</li>
+                    </ul>
 
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/tree" target="_blank" rel="noopener noreferrer">
-                Python Digraph Tree Builder — HTML, CSS, JavaScript
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Built an interactive directed-graph editor with live Graphviz rendering and exportable Python Digraph code.</li>
-        <li>Implemented node/edge editing, SVG preview, and Python-file import to reconstruct full graph projects.</li>
-    </ul>
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
+                                2048 Game — JavaScript, HTML/CSS
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Developed a fully functional 2048 game with keyboard and touch controls.</li>
+                        <li>Implemented tile-movement logic, merging rules, scoring, and win/lose detection.</li>
+                        <li>Rendered a responsive 4×4 grid with animations and persistent high scores.</li>
+                    </ul>
 
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
-                Personal Portfolio Website — HTML, CSS, JavaScript
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Created a multilingual personal portfolio with a responsive floating-paper layout.</li>
-        <li>Implemented dynamic language switching via URL parameters and structured content sections.</li>
-        <li>Deployed on GitHub Pages as a central hub for projects and professional information.</li>
-    </ul>
-
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
-                2048 Game — JavaScript, HTML/CSS
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Developed a fully functional 2048 game with keyboard and touch controls.</li>
-        <li>Implemented tile-movement logic, merging rules, scoring, and win/lose detection.</li>
-        <li>Rendered a responsive 4×4 grid with animations and persistent high scores.</li>
-    </ul>
-
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
-                Sudoku Solver — JavaScript, HTML/CSS
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Built an interactive Sudoku solver with a 9×9 grid and input validation.</li>
-        <li>Implemented a real-time backtracking algorithm to compute complete solutions.</li>
-        <li>Added conflict detection, example loading, and dynamic DOM updates.</li>
-    </ul>
-</section>
-
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
+                                Sudoku Solver — JavaScript, HTML/CSS
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Built an interactive Sudoku solver with a 9×9 grid and input validation.</li>
+                        <li>Implemented a real-time backtracking algorithm to compute complete solutions.</li>
+                        <li>Added conflict detection, example loading, and dynamic DOM updates.</li>
+                    </ul>
+                </section>
                 
-                <!-- EXPERIENCE -->
                 <section>
                     <h2 class="section-title">Experience</h2>
 
@@ -286,31 +191,28 @@
                     </ul>
                 </section>
 
-                <!-- EDUCATION -->
-<section>
-    <h2 class="section-title">Education</h2>
+                <section>
+                    <h2 class="section-title">Education</h2>
 
-    <div class="item-header">
-        <span>Bachelor of Computer Science</span>
-        <span>2019–2022; 2025–2026</span>
-    </div>
-    <div class="edu-sub">Stockholm University · McMaster University (GPA: 11.7/12)</div>
+                    <div class="item-header">
+                        <span>Bachelor of Computer Science</span>
+                        <span>2019–2022; 2025–2026</span>
+                    </div>
+                    <div class="edu-sub">Stockholm University · McMaster University (GPA: 11.7/12)</div>
 
-    <div class="item-header">
-        <span>German &amp; Swedish Language</span>
-        <span>2022–2024</span>
-    </div>
-    <div class="edu-sub">Lund University · University of Stuttgart · Goethe-Institut</div>
+                    <div class="item-header">
+                        <span>German &amp; Swedish Language</span>
+                        <span>2022–2024</span>
+                    </div>
+                    <div class="edu-sub">Lund University · University of Stuttgart · Goethe-Institut</div>
 
-    <div class="item-header">
-        <span>Ontario Secondary School Diploma</span>
-        <span>2018–2019</span>
-    </div>
-    <div class="edu-sub">Blyth Academy Mississauga (GPA: 90.625/100)</div>
-</section>
+                    <div class="item-header">
+                        <span>Ontario Secondary School Diploma</span>
+                        <span>2018–2019</span>
+                    </div>
+                    <div class="edu-sub">Blyth Academy Mississauga (GPA: 90.625/100)</div>
+                </section>
 
-
-                <!-- AWARDS -->
                 <section>
                     <h2 class="section-title">Awards</h2>
                     <ul>
@@ -321,7 +223,6 @@
                     </ul>
                 </section>
 
-                <!-- LANGUAGES -->
                 <section>
                     <h2 class="section-title">Languages</h2>
                     <p>English (C1, IELTS 7.0) · German (C1, TestDaF Level 4) · Swedish (C1, Lund University Certificate)</p>
@@ -329,7 +230,7 @@
                 </section>
             </div>
 
-            <!-- ================= GERMAN VERSION ================= -->
+            <!-- german version starting here -->
             <div data-lang="de">
                 <h1>Yi Luo</h1>
                 <div class="contact-info">
@@ -339,75 +240,57 @@
                     <a href="https://github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
                 </div>
 
-                <!-- FÄHIGKEITEN -->
-<section>
-    <h2 class="section-title">Fähigkeiten</h2>
-    <p><strong>Programmiersprachen:</strong> Python, C++, Java, SQL, Bash</p>
-    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
-    <p><strong>Informatik-Grundlagen:</strong> Algorithmen, Datenstrukturen, Datenbanken, OOP, Betriebssysteme</p>
-    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
-</section>
+                <section>
+                    <h2 class="section-title">Fähigkeiten</h2>
+                    <p><strong>Programmiersprachen:</strong> Python, C++, Java, SQL, Bash</p>
+                    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
+                    <p><strong>Informatik-Grundlagen:</strong> Algorithmen, Datenstrukturen, Datenbanken, OOP, Betriebssysteme</p>
+                    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
+                </section>
 
+                <section>
+                    <h2 class="section-title">Projekte</h2>
 
-                <!-- PROJEKTE -->
-<section>
-    <h2 class="section-title">Projekte</h2>
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
+                                Persönliche Portfolio-Website — HTML, CSS, JavaScript
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Mehrsprachiges Portfolio mit responsivem „Floating-Paper“-Layout entwickelt.</li>
+                        <li>Dynamischer Sprachwechsel über URL-Parameter und klar strukturierte Inhaltsbereiche.</li>
+                        <li>Deployment über GitHub Pages als zentrale Plattform für Projekte und Profilinformationen.</li>
+                    </ul>
 
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/tree" target="_blank" rel="noopener noreferrer">
-                Python Digraph Tree Builder — HTML, CSS, JavaScript
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Interaktiver Editor für gerichtete Graphen mit Live-Graphviz-Rendering und exportierbarem Python-Digraph-Code.</li>
-        <li>Implementierung von Knoten-/Kantenbearbeitung, SVG-Vorschau und Python-Dateiimport zur Rekonstruktion kompletter Projekte.</li>
-    </ul>
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
+                                2048-Spiel — JavaScript, HTML/CSS
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Vollständig spielbares 2048-Puzzle mit Tastatur- und Touch-Steuerung entwickelt.</li>
+                        <li>Implementierung der Logik für Bewegungen, Merge-Regeln, Punktesystem sowie Gewinn-/Verlust-Erkennung.</li>
+                        <li>Responsives 4×4-Raster mit Animationen und persistenten Highscores.</li>
+                    </ul>
 
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
-                Persönliche Portfolio-Website — HTML, CSS, JavaScript
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Mehrsprachiges Portfolio mit responsivem „Floating-Paper“-Layout entwickelt.</li>
-        <li>Dynamischer Sprachwechsel über URL-Parameter und klar strukturierte Inhaltsbereiche.</li>
-        <li>Deployment über GitHub Pages als zentrale Plattform für Projekte und Profilinformationen.</li>
-    </ul>
+                    <div class="item-header">
+                        <span>
+                            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
+                                Sudoku-Solver — JavaScript, HTML/CSS
+                            </a>
+                        </span>
+                    </div>
+                    <ul>
+                        <li>Interaktiver Sudoku-Solver mit 9×9-Raster und Eingabevalidierung.</li>
+                        <li>Backtracking-Algorithmus zur Berechnung vollständiger Lösungen in Echtzeit.</li>
+                        <li>Konfliktprüfung, Beispiel-Ladefunktion und dynamische DOM-Updates implementiert.</li>
+                    </ul>
+                </section>
 
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
-                2048-Spiel — JavaScript, HTML/CSS
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Vollständig spielbares 2048-Puzzle mit Tastatur- und Touch-Steuerung entwickelt.</li>
-        <li>Implementierung der Logik für Bewegungen, Merge-Regeln, Punktesystem sowie Gewinn-/Verlust-Erkennung.</li>
-        <li>Responsives 4×4-Raster mit Animationen und persistenten Highscores.</li>
-    </ul>
-
-    <div class="item-header">
-        <span>
-            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
-                Sudoku-Solver — JavaScript, HTML/CSS
-            </a>
-        </span>
-    </div>
-    <ul>
-        <li>Interaktiver Sudoku-Solver mit 9×9-Raster und Eingabevalidierung.</li>
-        <li>Backtracking-Algorithmus zur Berechnung vollständiger Lösungen in Echtzeit.</li>
-        <li>Konfliktprüfung, Beispiel-Ladefunktion und dynamische DOM-Updates implementiert.</li>
-    </ul>
-</section>
-
-
-
-                <!-- BERUFSERFAHRUNG -->
                 <section>
                     <h2 class="section-title">Berufserfahrung</h2>
 
@@ -428,43 +311,40 @@
                     </div>
                 </section>
 
-                <!-- AUSBILDUNG -->
-<section>
-    <h2 class="section-title">Ausbildung</h2>
+                <section>
+                    <h2 class="section-title">Ausbildung</h2>
 
-    <div class="item-header">
-        <span>Bachelor of Computer Science</span>
-        <span>2025–2026</span>
-    </div>
-    <div class="edu-sub">Stockholm University · Voraussichtliches Abschlussdatum: 2026.05</div>
+                    <div class="item-header">
+                        <span>Bachelor of Computer Science</span>
+                        <span>2025–2026</span>
+                    </div>
+                    <div class="edu-sub">Stockholm University · Voraussichtliches Abschlussdatum: 2026.05</div>
 
-    <div class="item-header">
-        <span>Bachelor of Mathematics</span>
-        <span>2024–2025</span>
-    </div>
-    <div class="edu-sub">University of Hamburg · Programm nicht abgeschlossen</div>
+                    <div class="item-header">
+                        <span>Bachelor of Mathematics</span>
+                        <span>2024–2025</span>
+                    </div>
+                    <div class="edu-sub">University of Hamburg · Programm nicht abgeschlossen</div>
 
-    <div class="item-header">
-        <span>Deutsch- und Schwedisch-Studien</span>
-        <span>2022–2024</span>
-    </div>
-    <div class="edu-sub">Lund University · Universität Stuttgart · Goethe-Institut</div>
+                    <div class="item-header">
+                        <span>Deutsch- und Schwedisch-Studien</span>
+                        <span>2022–2024</span>
+                    </div>
+                    <div class="edu-sub">Lund University · Universität Stuttgart · Goethe-Institut</div>
 
-    <div class="item-header">
-        <span>Bachelor of Computer Science</span>
-        <span>2019–2022</span>
-    </div>
-    <div class="edu-sub">McMaster University · Programm nicht abgeschlossen · 150 ECTS GPA: 11.7/12.0</div>
+                    <div class="item-header">
+                        <span>Bachelor of Computer Science</span>
+                        <span>2019–2022</span>
+                    </div>
+                    <div class="edu-sub">McMaster University · Programm nicht abgeschlossen · 150 ECTS GPA: 11.7/12.0</div>
 
-    <div class="item-header">
-        <span>Ontario Secondary School Diploma</span>
-        <span>2018–2019</span>
-    </div>
-    <div class="edu-sub">Blyth Academy Mississauga · Gesamtnote: 90.625/100</div>
-</section>
+                    <div class="item-header">
+                        <span>Ontario Secondary School Diploma</span>
+                        <span>2018–2019</span>
+                    </div>
+                    <div class="edu-sub">Blyth Academy Mississauga · Gesamtnote: 90.625/100</div>
+                </section>
 
-
-                <!-- AUSZEICHNUNGEN -->
                 <section>
                     <h2 class="section-title">Auszeichnungen</h2>
                     <ul>
@@ -474,18 +354,25 @@
                     </ul>
                 </section>
 
-                <!-- SPRACHEN -->
                 <section>
                     <h2 class="section-title">Sprachen</h2>
                     <p>Englisch (C1, IELTS 7.0) · Deutsch (C1, TestDaF Stufe 4) · Schwedisch (C1, Zertifikat der Universität Lund)</p>
                 </section>
             </div>
+        </main> 
+    </div> 
+</div>
 
 <script>
+// function inside ()();
+// it is called IIFE, to run the function without calling after loading the page
 (function () {
-    const SUPPORTED_LANGS = ["en", "de", "se"];
+    const SUPPORTED_LANGS = ["en", "de"];
 
     function getLangFromUrl() {
+        // window.location.href is full url of current page
+        // https://www.yiluo.de/?lang=en
+        // to construct ULR obj
         const url = new URL(window.location.href);
         const param = url.searchParams.get("lang");
         if (SUPPORTED_LANGS.includes(param)) return param;
@@ -495,18 +382,21 @@
     function setLangInUrl(lang) {
         const url = new URL(window.location.href);
         url.searchParams.set("lang", lang);
+        // update webaddress without refreshing the page
         window.history.replaceState({}, "", url);
     }
 
     function showLang(lang) {
-        // show/hide language blocks
+        // document.querySelectorAll("[data-lang]") get all element with attribute data-lang
         document.querySelectorAll("[data-lang]").forEach(el => {
+            // ternary operator if language match show it, other wise hide it
             el.style.display = (el.getAttribute("data-lang") === lang) ? "" : "none";
         });
 
-        // update active link
+        // document.querySelectorAll(".lang-selector a") get all link inside class lang-selector
         document.querySelectorAll(".lang-selector a").forEach(a => {
             const aLang = a.getAttribute("data-lang-link");
+            // if aLang === lang, then make it active, otherwise remove active
             a.classList.toggle("active", aLang === lang);
         });
     }
@@ -515,8 +405,11 @@
     showLang(initialLang);
 
     document.querySelectorAll(".lang-selector a").forEach(a => {
+        // e stands for event
         a.addEventListener("click", function (e) {
+            // let js handle the event
             e.preventDefault();
+            // this means the element that got clicked
             const lang = this.getAttribute("data-lang-link");
             if (!SUPPORTED_LANGS.includes(lang)) return;
             setLangInUrl(lang);

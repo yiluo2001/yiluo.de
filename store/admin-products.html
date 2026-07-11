@@ -12,7 +12,7 @@
         .admin-grid {
             display: grid;
             /* only 1 column, fr means frational unit */
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             /* items 40 pixel apart */
             gap: 40px;
         }
@@ -21,7 +21,7 @@
         @media (min-width: 768px) {
             .admin-grid {
                 /* 2 columns, 1/3 and 2/3 */
-                grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+                grid-template-columns: 1fr 2fr;
             }
         }
 
@@ -30,6 +30,12 @@
             border-radius: 4px;
             padding: 20px;
             background: #fafafa;
+        }
+
+        .admin-card > div {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Makes scrolling smooth on iPhones */
         }
 
         .admin-card h2 {
@@ -110,11 +116,6 @@
             border-collapse: collapse;
             font-size: 15px;
             table-layout: auto;
-        }
-
-        .product-table td {
-            word-break: break-word; 
-            overflow-wrap: break-word;
         }
 
         /* table header and table data */

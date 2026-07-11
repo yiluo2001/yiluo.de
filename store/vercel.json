@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/store",
+      "destination": "/store/products.html",
+      "permanent": true
+    },
+    {
+      "source": "/store/",
+      "destination": "/store/products.html",
+      "permanent": true
+    }
+  ]
+}

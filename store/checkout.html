@@ -212,11 +212,20 @@
         payButton.disabled = true;
         errorDisplay.textContent = '';
 
+        let returnUrlDestination;
+
+        if (window.location.origin.includes('yiluo.de')) {
+            returnUrlDestination = 'https://www.yiluo.de/store/payment-status.html';
+        } else {
+            // for local development (e.g., http://localhost:8080)
+            returnUrlDestination = window.location.origin + '/payment-status.html';
+        }
+
         try {
             const result = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: window.location.origin + '/payment-status.html', 
+                    return_url: returnUrlDestination, 
                 },
             });
 

@@ -146,25 +146,45 @@
             font-size: 14px;
         }
 
-        /* --- Mobile Responsive Fixes --- */
+        /* --- Reinforced Mobile Responsive Fixes --- */
         @media (max-width: 768px) {
+            /* Force the main wrappers to fit exactly within the phone screen boundaries */
+            html, body {
+                width: 100% !important;
+                overflow-x: hidden; /* Prevents horizontal accidental scrolling */
+            }
+
+            .page-wrapper {
+                padding: 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .paper {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: none !important; /* Removes heavy shadows on mobile screens */
+                border-radius: 0 !important;
+                overflow: hidden !important;
+            }
+
             /* Drop header elements into a vertical stack */
             .paper-header {
-                flex-direction: column;
-                gap: 12px;
+                flex-direction: column !important;
+                gap: 12px !important;
                 align-items: flex-start !important;
                 padding: 15px !important;
             }
 
             .paper-header div {
-                font-size: 13px;
+                font-size: 13px !important;
             }
 
             /* Allow navigation items to wrap if they run out of width */
             .main-nav {
-                flex-wrap: wrap;
-                gap: 12px;
-                padding: 10px 0;
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+                padding: 10px 0 !important;
             }
 
             .main-nav a {
@@ -174,10 +194,10 @@
             /* Fix the log out link layout positioning on small screens */
             .main-nav a:last-child {
                 margin-left: 0 !important;
-                width: 100%;
-                border-top: 1px dashed #ccc;
-                padding-top: 8px;
-                margin-top: 4px;
+                width: 100% !important;
+                border-top: 1px dashed #ccc !important;
+                padding-top: 8px !important;
+                margin-top: 4px !important;
             }
 
             /* Bring container paddings down slightly to save screen width */
@@ -186,7 +206,7 @@
             }
 
             .paper-content h1 {
-                font-size: 24px;
+                font-size: 24px !important;
             }
         }
     </style>

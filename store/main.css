@@ -92,3 +92,49 @@ html, body {
     font-size: 32px;
 }
 
+/* --- Mobile Responsive Rules --- */
+@media (max-width: 768px) {
+    /* Reduce outer wrapper padding so the container fills the screen better */
+    .page-wrapper {
+        padding-top: 15px;
+        padding-bottom: 30px;
+    }
+
+    /* Drop the header elements to a vertical column so they don't squash horizontally */
+    .paper-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start; /* Aligns text cleanly to the left */
+        padding: 15px;
+    }
+
+    /* Shift language links up cleanly */
+    .lang-selector {
+        margin-left: 0;
+    }
+    .lang-selector a {
+        margin-left: 0;
+        margin-right: 16px;
+    }
+
+    /* Give navigation items space to wrap if they run out of horizontal room */
+    .paper-top-strip {
+        padding: 12px 15px;
+    }
+    .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .main-nav a {
+        margin-right: 0; /* Let flex gap handle spacing cleanly */
+    }
+
+    /* Bring padding in slightly to optimize screen real estate for small displays */
+    .paper-content {
+        padding: 25px 15px 40px;
+    }
+    .paper-content h1 {
+        font-size: 26px; /* Slightly downscaled heading for balance */
+    }
+}

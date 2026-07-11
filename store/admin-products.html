@@ -145,6 +145,50 @@
             text-align: center;
             font-size: 14px;
         }
+
+        /* --- Mobile Responsive Fixes --- */
+        @media (max-width: 768px) {
+            /* Drop header elements into a vertical stack */
+            .paper-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start !important;
+                padding: 15px !important;
+            }
+
+            .paper-header div {
+                font-size: 13px;
+            }
+
+            /* Allow navigation items to wrap if they run out of width */
+            .main-nav {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 10px 0;
+            }
+
+            .main-nav a {
+                margin-right: 20px !important;
+            }
+
+            /* Fix the log out link layout positioning on small screens */
+            .main-nav a:last-child {
+                margin-left: 0 !important;
+                width: 100%;
+                border-top: 1px dashed #ccc;
+                padding-top: 8px;
+                margin-top: 4px;
+            }
+
+            /* Bring container paddings down slightly to save screen width */
+            .paper-content {
+                padding: 25px 15px 40px !important;
+            }
+
+            .paper-content h1 {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 

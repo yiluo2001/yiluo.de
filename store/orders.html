@@ -28,11 +28,14 @@
         align-items: center;
         border-bottom: 1px solid #e0e0e0;
         font-size: 14px;
+        flex-wrap: wrap;
+        gap: 15px;
     }
 
     .order-header-meta {
         display: flex;
-        gap: 30px;
+        gap: 15px;
+        flex-wrap: wrap;
     }
 
     .order-id {
@@ -89,6 +92,12 @@
         border-radius: 3px;
         margin-bottom: 20px;
         text-align: center;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 </style>
 </head>
@@ -194,7 +203,7 @@
                     card.className = 'order-card';
 
                     let cardHTML = `
-                        <div class="order-header"  style="overflow-x: auto;">
+                        <div class="order-header">
                             <div class="order-header-meta">
                                 <div>
                                     <div style="color: #666; font-size: 11px; text-transform: uppercase;">Order Placed</div>
@@ -217,6 +226,7 @@
                                 <span class="status-badge ${statusClass}">${status}</span>
                             </div>
                         </div>
+                        <div class="table-responsive">
                         <table class="order-items-table">
                             <thead>
                                 <tr>
@@ -248,6 +258,7 @@
                     cardHTML += `
                             </tbody>
                         </table>
+                        </div>
                     `;
                     
                     card.innerHTML = cardHTML;

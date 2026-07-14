@@ -8,7 +8,7 @@
 <style>
 .contact-info {
     margin-bottom: 25px;
-    font-size: 14px;
+    font-size: 18px;
     /* making height of the line 1.6 times the font size */
     line-height: 1.6;
 }
@@ -21,68 +21,61 @@
 .section-title {
     margin-top: 25px;
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 4px;
 }
 
-.subheading {
-    font-weight: bold;
-    margin-top: 8px;
-    margin-bottom: 4px;
-}
-
-/* ul is unordered list */
-.paper-content ul {
-    margin-top: 4px;
-    margin-bottom: 10px;
-    padding-left: 20px;
-}
-
-/* li is list item */
-.paper-content li {
-    margin-bottom: 3px;
-}
-
-.item-header {
+.subsection-title {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
+    font-size: 18px;
     margin-top: 10px;
 }
 
-/* inside item-header, targetting the very last span */
-.item-header span:last-child {
+.subsection-title a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+.dates {
     font-weight: normal;
     font-size: 13px;
     color: #666;
 }
 
-/* to find a link that has class name project-link */
-.item-header a.project-link {
-    /* force the color */
-    color: #000 !important;
-    font-weight: bold;
-    font-size: 13px;
-    text-decoration: none;
-}
-
-.item-header a.project-link:hover {
-    text-decoration: underline;
-}
-
-.edu-sub {
+.under-subsection-title {
     font-size: 14px;
+    margin-top: 2px;
     margin-bottom: 8px;
+    font-style: italic;
+    color: #555;
 }
+
+/* ul is unordered list */
+.paper-content ul {
+    margin-top: 6px;
+    margin-bottom: 16px;
+    padding-left: 20px;
+}
+
+/* li is list item */
+.paper-content li {
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+}
+
 </style>
 
 </head>
 <body>
 
-<div class="page-wrapper" scale: 1.5;>
+<div class="page-wrapper">
     <div class="paper">
 
         <header class="paper-header">
@@ -99,267 +92,235 @@
         <div class="paper-top-strip">
             <nav class="main-nav">
                 <a href="https://www.yiluo.de" style="color: #000000;">CV</a>
+                <a href="https://www.yiluo.de/sudoku">Sudoku</a>
                 <a href="https://www.yiluo.de/2048">2048</a>
-                <a href="https://www.yiluo.de/sudoku">Sudoku Solver</a>
+                <a href="https://www.yiluo.de/store">Store</a>
             </nav>
         </div>
 
         <main class="paper-content">
-
             <div data-lang="en">
                 <h1>Yi Luo</h1>
                 <div class="contact-info">
-                    <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> ·
-                    <span>+49 160 9149 7898</span> ·
-                    <!-- target="_blank" means open a new tab, rel="noopener noreferrer" is for security -->
-                    <a href="https://yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> ·
-                    <a href="https://github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
+                    <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> |
+                    <!-- <span>+49 160 9149 7898</span> · -->
+                    <a href="https://www.yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> |
+                    <a href="https://www.github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
                 </div>
 
                 <section>
                     <h2 class="section-title">Skills</h2>
-                    <p><strong>Languages:</strong> Python, C++, Java, SQL, Bash</p>
-                    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
-                    <p><strong>CS Foundations:</strong> Algorithms, Data Structures, Databases, OOP, Operating Systems</p>
-                    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
+                    <p><strong>Languages:</strong> Java (26), SQL (MySQL), JavaScript</p>
+                    <p><strong>Frameworks &amp; Tools:</strong> Spring Boot 4, Spring Security, Spring Data JPA, Hibernate, Maven</p>
+                    <p><strong>Cloud, DevOps &amp; Testing:</strong> Docker, Git, JUnit 5, Mockito, Postman, DBeaver, Aiven, Render, Vercel</p>
                 </section>
 
                 <section>
                     <h2 class="section-title">Projects</h2>
 
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
-                                Personal Portfolio Website — HTML, CSS, JavaScript
-                            </a>
-                        </span>
+                    <div class="subsection-title">
+                        <span>Full-Stack E-Commerce Application</span>
+                        <span style="font-weight: normal;"><a href="https://www.yiluo.de" target="_blank">Live Demo</a> | <a href="https://www.github.com/yiluo2001/store"  target="_blank">Backend Code</a>  | <a href="https://www.github.com/yiluo2001/yiluo.de" target="_blank">Frontend Code</a></span>
                     </div>
+                    <div class="under-subsection-title">Tech Stack: Java 26, Spring Boot 4, MySQL, Docker, JUnit 5, Mockito, JavaScript, Render, Vercel</div>
                     <ul>
-                        <li>Created a multilingual personal portfolio with a responsive floating-paper layout.</li>
-                        <li>Implemented dynamic language switching via URL parameters and structured content sections.</li>
-                        <li>Deployed on GitHub Pages as a central hub for projects and professional information.</li>
+                        <li>Architected a decoupled full-stack application featuring a dual-interface JavaScript frontend
+                            (admin dashboard and customer storefront) backed by a robust Spring Boot REST API.</li>
+                        <li>Implemented stateless authentication and authorization using Spring Security and JWT,
+                            establishing role-based access control (RBAC) for admins and customers.</li>
+                        <li>Integrated Stripe Payment Webhooks to asynchronously process transactions,
+                            securely updating order payment statuses in real-time.</li>
+                        <li>Optimized database performance via custom JPQL queries and entity graphs, eliminating N+1 select issues during complex order-history fetches.</li>
+                        <li>Achieved high code reliability by writing comprehensive unit and integration tests using JUnit 5 and Mockito to validate core business logic.</li>
+                        <li>Containerized the backend using Docker multi-stage builds, reducing final production image size by 45% for deployment via Vercel and Render.</li>
                     </ul>
 
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
-                                2048 Game — JavaScript, HTML/CSS
-                            </a>
-                        </span>
+                    <div class="subsection-title">
+                        <span>Interactive Web Applications Portfolio</span>
+                        <span></span>
                     </div>
+                    <div class="under-subsection-title">Tech Stack: JavaScript, HTML, CSS, Vercel</div>
                     <ul>
-                        <li>Developed a fully functional 2048 game with keyboard and touch controls.</li>
-                        <li>Implemented tile-movement logic, merging rules, scoring, and win/lose detection.</li>
-                        <li>Rendered a responsive 4×4 grid with animations and persistent high scores.</li>
-                    </ul>
-
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
-                                Sudoku Solver — JavaScript, HTML/CSS
-                            </a>
-                        </span>
-                    </div>
-                    <ul>
-                        <li>Built an interactive Sudoku solver with a 9×9 grid and input validation.</li>
-                        <li>Implemented a real-time backtracking algorithm to compute complete solutions.</li>
-                        <li>Added conflict detection, example loading, and dynamic DOM updates.</li>
+                        <li>Developed a suite of algorithmic web applications, including a Sudoku Solver utilizing a real-time backtracking algorithm with dynamic conflict detection.</li>
+                        <li>Built a functional 2048 clone featuring stateful tile-merging logic, event listeners, and high scores tracker.</li>
                     </ul>
                 </section>
                 
                 <section>
                     <h2 class="section-title">Experience</h2>
 
-                    <div class="item-header">
-                        <span>Teaching Assistant — McMaster University</span>
-                        <span>Jan 2021 – Apr 2023</span>
+                    <div class="subsection-title">
+                        <span>Teaching Assistant</span>
+                        <span class="dates">Jan 2021 – Apr 2023</span>
                     </div>
+                    <div class="under-subsection-title">McMaster University</div>
                     <ul>
-                        <li>COMPSCI 2DB3, 1XC3; SFWRENG 2C03</li>
-                        <li>Led tutorials and labs.</li>
-                        <li>Guided students in debugging, algorithm design, and implementing solutions.</li>
-                        <li>Improved course materials and automated grading scripts.</li>
-                        <li>Provided individual academic and technical support.</li>
+                        <li>Courses: COMPSCI 2DB3 (Databases), 1XC3 (Computer Science Practice); SFWRENG 2C03 (Data Structures &amp; Algorithms)</li>
+                        <li>Automated grading workflows by refactoring Python/Bash grading scripts, reducing evaluation turnaround time for 100+ students.</li>
+                        <li>Led bi-weekly tutorials and practical labs for 60+ undergraduate students, breaking down core concepts in database design, data structures, and algorithm complexity.</li>
+                        <li>Mentored students in technical troubleshooting, debugging, and efficient algorithm implementation during dedicated code-review sessions.</li>
                     </ul>
 
-                    <div class="item-header">
-                        <span>Teaching Assistant (Volunteer) — Blyth Academy Mississauga</span>
-                        <span>Nov 2018 – Feb 2019</span>
+                    <div class="subsection-title">
+                        <span>Teaching Assistant (Volunteer)</span>
+                        <span class="dates">Nov 2018 – Feb 2019</span>
                     </div>
+                    <div class="under-subsection-title">Blyth Academy Mississauga</div>
                     <ul>
                         <li>Grade 12 Calculus and Vectors (MCV4U)</li>
+                        <li>Guided a class of 20+ students through advanced calculus principles, vector components, and algebraic problem-solving strategies.</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2 class="section-title">Education</h2>
 
-                    <div class="item-header">
+                    <div class="subsection-title">
                         <span>Bachelor of Computer Science</span>
-                        <span>2019–2022; 2025–2026</span>
+                        <span class="dates">2019 – Present (Expected Aug 2026)</span>
                     </div>
-                    <div class="edu-sub">Stockholm University · McMaster University (GPA: 11.7/12)</div>
+                    <div class="under-subsection-title">McMaster University &amp; Stockholm University · Cumulative GPA: 11.7 / 12.0</div>
+                    <ul>
+                        <li>Focus: Software Engineering, Data Structures &amp; Algorithms, Database Systems</li>
+                        <li>Note: Paused studies from 2022–2024 for full-time language acquisition in Europe.</li>
+                    </ul>
 
-                    <div class="item-header">
-                        <span>German &amp; Swedish Language</span>
-                        <span>2022–2024</span>
+                    <div class="subsection-title">
+                        <span>German &amp; Swedish Language Certifications</span>
+                        <span class="dates">2022 – 2024</span>
                     </div>
-                    <div class="edu-sub">Lund University · University of Stuttgart · Goethe-Institut</div>
-
-                    <div class="item-header">
-                        <span>Ontario Secondary School Diploma</span>
-                        <span>2018–2019</span>
-                    </div>
-                    <div class="edu-sub">Blyth Academy Mississauga (GPA: 90.625/100)</div>
+                    <div class="under-subsection-title">Lund University · University of Stuttgart · Goethe-Institut</div>
+                    <ul>
+                        <li>Intensive acquisition of German and Swedish to professional C1 fluency.</li>
+                    </ul>
                 </section>
 
                 <section>
                     <h2 class="section-title">Awards</h2>
                     <ul>
-                        <li>McMaster University Dean’s Honour List (twice, 2020 and 2021)</li>
-                         <li>McMaster Entrance Scholarship CA$2500 (2019)</li>
-                        <li>Ontario Scholar (2019)</li>
+                        <li>McMaster University Dean’s Honour List (2020, 2021)</li>
+                        <li>McMaster Entrance Scholarship CA$2500</li>
                         <li>Canadian Senior Mathematics Contest — School Champion &amp; Distinction (2018)</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2 class="section-title">Languages</h2>
-                    <p>English (C1, IELTS 7.0) · German (C1, TestDaF Level 4) · Swedish (C1, Lund University Certificate)</p>
+                    <p>English (C1, IELTS 7.0) | German (C1, TestDaF Level 4) | Swedish (C1, Lund University Certificate)</p>
                     <p>Mandarin (Native)</p>
                 </section>
             </div>
 
-            <!-- german version starting here -->
-            <div data-lang="de">
+            <div data-lang="de" style="display: none;">
                 <h1>Yi Luo</h1>
                 <div class="contact-info">
-                    <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> ·
-                    <span>+49 160 9149 7898</span> ·
-                    <a href="https://yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> ·
-                    <a href="https://github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
+                    <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> |
+                    <a href="https://www.yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> |
+                    <a href="https://www.github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
                 </div>
 
                 <section>
-                    <h2 class="section-title">Fähigkeiten</h2>
-                    <p><strong>Programmiersprachen:</strong> Python, C++, Java, SQL, Bash</p>
-                    <p><strong>Frontend:</strong> HTML, CSS, JavaScript</p>
-                    <p><strong>Informatik-Grundlagen:</strong> Algorithmen, Datenstrukturen, Datenbanken, OOP, Betriebssysteme</p>
-                    <p><strong>Tools:</strong> Git, Linux, VS Code, Agile/Scrum</p>
+                    <h2 class="section-title">Technische Kenntnisse</h2>
+                    <p><strong>Programmiersprachen:</strong> Java (26), SQL (MySQL), JavaScript</p>
+                    <p><strong>Frameworks &amp; Tools:</strong> Spring Boot 4, Spring Security, Spring Data JPA, Hibernate, Maven</p>
+                    <p><strong>Cloud, DevOps &amp; Testing:</strong> Docker, Git, JUnit 5, Mockito, Postman, DBeaver, Aiven, Render, Vercel</p>
                 </section>
 
                 <section>
                     <h2 class="section-title">Projekte</h2>
 
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de" target="_blank" rel="noopener noreferrer">
-                                Persönliche Portfolio-Website — HTML, CSS, JavaScript
-                            </a>
-                        </span>
+                    <div class="subsection-title">
+                        <span>Full-Stack E-Commerce Applikation</span>
+                        <span style="font-weight: normal;"><a href="https://www.yiluo.de" target="_blank">Live Demo</a> | <a href="https://www.github.com/yiluo2001/store" target="_blank">Backend Code</a> | <a href="https://www.github.com/yiluo2001/yiluo.de" target="_blank">Frontend Code</a></span>
                     </div>
+                    <div class="under-subsection-title">Tech Stack: Java 26, Spring Boot 4, MySQL, Docker, JUnit 5, Mockito, JavaScript, Render, Vercel</div>
                     <ul>
-                        <li>Mehrsprachiges Portfolio mit responsivem „Floating-Paper“-Layout entwickelt.</li>
-                        <li>Dynamischer Sprachwechsel über URL-Parameter und klar strukturierte Inhaltsbereiche.</li>
-                        <li>Deployment über GitHub Pages als zentrale Plattform für Projekte und Profilinformationen.</li>
+                        <li>Konzeption und Entwicklung einer entkoppelten Full-Stack-Anwendung mit einer dualen JavaScript-Benutzeroberfläche – bestehend aus einem Admin-Dashboard zur Verwaltung und einem Kunden-Storefront –, angebunden an eine robuste Spring Boot REST-API.</li>
+                        <li>Implementierung einer zustandslosen (stateless) Authentifizierung und Autorisierung mittels Spring Security und JWT; Etablierung einer rollenbasierten Zugriffskontrolle (RBAC) für Admins und Kunden.</li>
+                        <li>Integration von Stripe-Payment-Webhooks zur asynchronen Transaktionsverarbeitung und sicheren Aktualisierung des Zahlungsstatus in Echtzeit.</li>
+                        <li>Datenbankoptimierung durch benutzerdefinierte JPQL-Abfragen und Entity Graphs, wodurch N+1-Select-Probleme bei komplexen Abfragen der Bestellhistorie vollständig eliminiert wurden.</li>
+                        <li>Sicherstellung hoher Code-Zuverlässigkeit durch das Schreiben umfassender Unit- und Integrationstests mit JUnit 5 und Mockito zur Validierung der Kern-Geschäftslogik.</li>
+                        <li>Containerisierung des Backends mittels Docker-Multi-Stage-Builds, was die finale Größe des Produktionsimages um 45% reduzierte; Deployment über Vercel (Frontend) und Render (Backend).</li>
                     </ul>
 
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de/2048" target="_blank" rel="noopener noreferrer">
-                                2048-Spiel — JavaScript, HTML/CSS
-                            </a>
-                        </span>
+                    <div class="subsection-title">
+                        <span>Interaktives Web-Portfolio</span>
+                        <span></span>
                     </div>
+                    <div class="under-subsection-title">Tech Stack: JavaScript, HTML, CSS, Vercel</div>
                     <ul>
-                        <li>Vollständig spielbares 2048-Puzzle mit Tastatur- und Touch-Steuerung entwickelt.</li>
-                        <li>Implementierung der Logik für Bewegungen, Merge-Regeln, Punktesystem sowie Gewinn-/Verlust-Erkennung.</li>
-                        <li>Responsives 4×4-Raster mit Animationen und persistenten Highscores.</li>
-                    </ul>
-
-                    <div class="item-header">
-                        <span>
-                            <a class="project-link" href="https://yiluo.de/sudoku" target="_blank" rel="noopener noreferrer">
-                                Sudoku-Solver — JavaScript, HTML/CSS
-                            </a>
-                        </span>
-                    </div>
-                    <ul>
-                        <li>Interaktiver Sudoku-Solver mit 9×9-Raster und Eingabevalidierung.</li>
-                        <li>Backtracking-Algorithmus zur Berechnung vollständiger Lösungen in Echtzeit.</li>
-                        <li>Konfliktprüfung, Beispiel-Ladefunktion und dynamische DOM-Updates implementiert.</li>
+                        <li>Entwicklung einer Reihe von algorithmischen Webanwendungen, darunter ein Sudoku-Solver basierend auf einem Echtzeit-Backtracking-Algorithmus mit dynamischer Konflikterkennung.</li>
+                        <li>Erstellung eines funktionalen 2048-Klons mit zustandsbehafteter Kachel-Merging-Logik, Tastatur-/Touch-Event-Handlern und Speicherung von Highscores.</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2 class="section-title">Berufserfahrung</h2>
+                    <h2 class="section-title">Beruflicher Werdegang</h2>
 
-                    <div class="item-header">
-                        <span>Teaching Assistant — McMaster University</span>
-                        <span>Jan 2021 – Apr 2023</span>
+                    <div class="subsection-title">
+                        <span>Studentische Hilfskraft (Teaching Assistant)</span>
+                        <span class="dates">Jan. 2021 – Apr. 2023</span>
                     </div>
+                    <div class="under-subsection-title">McMaster University</div>
                     <ul>
-                        <li>Leitung von Übungen und Laboren in Algorithmen, Datenstrukturen, Datenbanken und praktischer Informatik.</li>
-                        <li>Unterstützung der Studierenden beim Debugging, bei der Algorithmenentwicklung und bei der Umsetzung von Lösungen.</li>
-                        <li>Verbesserung von Kursmaterialien und Entwicklung automatisierter Bewertungsskripte.</li>
-                        <li>Individuelle fachliche und technische Betreuung von Studierenden.</li>
+                        <li>Module: COMPSCI 2DB3 (Datenbanken), 1XC3 (Informatik in der Praxis), SFWRENG 2C03 (Datenstrukturen &amp; Algorithmen)</li>
+                        <li>Automatisierung von Benotungsprozessen durch Refactoring von Python- und Bash-Skripten, was die Auswertungszeit für über 100 Studierende erheblich verkürzte.</li>
+                        <li>Leitung zweiwöchentlicher Tutorien und praktischer Laborübungen für mehr als 60 Studierende zur Vermittlung von Kernkonzepten im Bereich Datenbankdesign, Datenstrukturen und Algorithmenkomplexität.</li>
+                        <li>Fachliche Unterstützung und Mentoring von Studierenden bei der Fehlersuche (Debugging) und der effizienten Implementierung von Algorithmen in Code-Review-Sitzungen.</li>
                     </ul>
 
-                    <div class="item-header">
-                        <span>Teaching Assistant (Ehrenamt) — Blyth Academy, Calculus &amp; Vectors</span>
-                        <span>Nov 2018 – Feb 2019</span>
+                    <div class="subsection-title">
+                        <span>Lehrassistent (Ehrenamtlich)</span>
+                        <span class="dates">Nov. 2018 – Feb. 2019</span>
                     </div>
+                    <div class="under-subsection-title">Blyth Academy Mississauga</div>
+                    <ul>
+                        <li>Analysis und Vektoren (Oberstufe / Grade 12)</li>
+                        <li>Unterstützung einer Klasse von über 20 Schülern bei fortgeschrittenen Prinzipien der Analysis, Vektorkomponenten und algebraischen Lösungsstrategien.</li>
+                    </ul>
                 </section>
 
                 <section>
                     <h2 class="section-title">Ausbildung</h2>
 
-                    <div class="item-header">
+                    <div class="subsection-title">
                         <span>Bachelor of Computer Science</span>
-                        <span>2025–2026</span>
+                        <span class="dates">2019 – 09/2026 (Voraussichtlich)</span>
                     </div>
-                    <div class="edu-sub">Stockholm University · Voraussichtliches Abschlussdatum: 2026.05</div>
+                    <div class="under-subsection-title">McMaster University (Kanada) &amp; Universität Stockholm (Schweden) · Notendurchschnitt: GPA 11.7 / 12.0</div>
+                    <ul>
+                        <li>Schwerpunkte: Software Engineering, Datenstrukturen und Algorithmen, Datenbanksysteme</li>
+                        <li>Hinweis: Unterbrechung des Studiums von 2022–2024 für Vollzeit-Sprachstudium in Europa.</li>
+                    </ul>
 
-                    <div class="item-header">
-                        <span>Bachelor of Mathematics</span>
-                        <span>2024–2025</span>
+                    <div class="subsection-title">
+                        <span>Intensiv-Sprachstudium &amp; Zertifikate</span>
+                        <span class="dates">2022 – 2024</span>
                     </div>
-                    <div class="edu-sub">University of Hamburg · Programm nicht abgeschlossen</div>
-
-                    <div class="item-header">
-                        <span>Deutsch- und Schwedisch-Studien</span>
-                        <span>2022–2024</span>
-                    </div>
-                    <div class="edu-sub">Lund University · Universität Stuttgart · Goethe-Institut</div>
-
-                    <div class="item-header">
-                        <span>Bachelor of Computer Science</span>
-                        <span>2019–2022</span>
-                    </div>
-                    <div class="edu-sub">McMaster University · Programm nicht abgeschlossen · 150 ECTS GPA: 11.7/12.0</div>
-
-                    <div class="item-header">
-                        <span>Ontario Secondary School Diploma</span>
-                        <span>2018–2019</span>
-                    </div>
-                    <div class="edu-sub">Blyth Academy Mississauga · Gesamtnote: 90.625/100</div>
+                    <div class="under-subsection-title">Universität Lund · Universität Stuttgart · Goethe-Institut</div>
+                    <ul>
+                        <li>Vollzeit-Spracherwerb bis zur berufsbezogenen C1-Fließendigkeit in Deutsch und Schwedisch.</li>
+                    </ul>
                 </section>
 
                 <section>
                     <h2 class="section-title">Auszeichnungen</h2>
                     <ul>
-                        <li>Dean’s Honour List der McMaster University (2020, 2021)</li>
-                        <li>Ontario Scholar (2019)</li>
-                        <li>Canadian Senior Mathematics Contest — Schulbester &amp; Distinction (2018)</li>
+                        <li>McMaster University Dean’s Honour List (zweifache Auszeichnung, 2020 und 2021)</li>
+                        <li>McMaster Entrance Scholarship (CA$ 2500, 2019)</li>
+                        <li>Canadian Senior Mathematics Contest — Schulsieger mit Auszeichnung (2018)</li>
                     </ul>
                 </section>
 
                 <section>
-                    <h2 class="section-title">Sprachen</h2>
-                    <p>Englisch (C1, IELTS 7.0) · Deutsch (C1, TestDaF Stufe 4) · Schwedisch (C1, Zertifikat der Universität Lund)</p>
+                    <h2 class="section-title">Sprachkenntnisse</h2>
+                    <p>Deutsch: C1 (TestDaF Niveau 4) | Englisch: C1 (IELTS 7.0) | Schwedisch: C1 (Lund University Zertifikat)</p>
+                    <p>Mandarin: Muttersprache</p>
                 </section>
             </div>
-        </main> 
+
+        </main>
+
     </div> 
 </div>
 

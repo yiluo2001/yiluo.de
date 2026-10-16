@@ -70,6 +70,52 @@
     color: #444;
 }
 
+/* Layout for Experience & Education entries */
+.entry-item {
+    display: grid;
+    grid-template-columns: 140px 1fr; /* Fixed width for dates on left, remaining space on right */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.entry-date {
+    font-size: 15px;
+    color: #444;
+    white-space: nowrap;
+    padding-top: 2px; /* Aligns visually with header text */
+}
+
+.entry-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.entry-subtitle {
+    font-size: 15px;
+    color: #444;
+    margin-top: 2px;
+    margin-bottom: 6px;
+}
+
+.entry-content ul {
+    margin-top: 4px;
+    margin-bottom: 0;
+    padding-left: 18px;
+}
+
+.entry-content li {
+    margin-bottom: 4px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+}
+
 </style>
 
 </head>
@@ -100,111 +146,129 @@
 
         <main class="paper-content">
             <div data-lang="en">
-                <h1>Yi Luo</h1>
+                <!-- <h1>Yi Luo</h1>
                 <div class="contact-info">
                     <a href="mailto:yi.luo@gmx.com">yi.luo@gmx.com</a> |
-                    <!-- <span>+49 160 9149 7898</span> · -->
                     <a href="https://www.yiluo.de" target="_blank" rel="noopener noreferrer">yiluo.de</a> |
                     <a href="https://www.github.com/yiluo2001" target="_blank" rel="noopener noreferrer">github.com/yiluo2001</a>
-                </div>
-
-                <section>
-                    <h2 class="section-title">Skills</h2>
-                    <p><strong>Languages:</strong> Java (26), Python, SQL (MySQL), JavaScript</p>
-                    <p><strong>Frameworks &amp; Tools:</strong> Spring Boot 4, Spring Security, Spring Data JPA, Hibernate, Maven</p>
-                    <p><strong>Cloud, DevOps &amp; Testing:</strong> Docker, Git, JUnit 5, Mockito, Postman, DBeaver, Aiven, Render, Vercel</p>
-                </section>
-
-                <section>
-                    <h2 class="section-title">Projects</h2>
-
-                    <div class="subsection-title">
-                        <span>Full-Stack E-Commerce Application</span>
-                        <span style="font-weight: normal;"><a href="https://www.yiluo.de" target="_blank">Live Demo</a> | <a href="https://www.github.com/yiluo2001/store"  target="_blank">Backend Code</a>  | <a href="https://www.github.com/yiluo2001/yiluo.de" target="_blank">Frontend Code</a></span>
-                    </div>
-                    <div class="under-subsection-title">Tech Stack: Java 26, Spring Boot 4, MySQL, Docker, JUnit 5, Mockito, JavaScript, Render, Vercel</div>
-                    <ul>
-                        <li>Architected a decoupled full-stack application featuring a dual-interface JavaScript frontend
-                            (admin dashboard and customer storefront) backed by a robust Spring Boot REST API.</li>
-                        <li>Implemented stateless authentication and authorization using Spring Security and JWT,
-                            establishing role-based access control (RBAC) for admins and customers.</li>
-                        <li>Integrated Stripe Payment Webhooks to asynchronously process transactions,
-                            securely updating order payment statuses in real-time.</li>
-                        <li>Optimized database performance via custom JPQL queries and entity graphs, eliminating N+1 select issues during complex order-history fetches.</li>
-                        <li>Achieved high code reliability by writing comprehensive unit and integration tests using JUnit 5 and Mockito to validate core business logic.</li>
-                        <li>Containerized the backend using Docker multi-stage builds, reducing final production image size by 45% for deployment via Vercel and Render.</li>
-                    </ul>
-
-                    <div class="subsection-title">
-                        <span>Thesis: Random Walks & Mixing Times on Graphs: A Mathematical and Simulation-Based Analysis</span>
-                    </div>
-                    <div class="under-subsection-title">Stockholm University <br>Tech Stack: Python, NumPy, NetworkX, SciPy, Matplotlib</div>
-                    <ul>
-                        <li>Programmed synthetic graph topologies (paths, cycles, grids, Erdős-Rényi random graphs) and transition matrices from scratch using raw arrays.</li>
-                        <li>Simulated stochastic Markov chains to track vertex probability distributions and evaluate convergence speeds using Total Variation Distance.</li>
-                        <li>Conducted linear and log-log regression analyses ($R^2$ evaluation) to evaluate empirical mixing times against asymptotic theoretical complexities.</li>
-                        <li>Analyzed transition matrix eigenvalues via SciPy to establish empirical validation for inverse spectral gap proportions.</li>
-                    </ul>
-
-                </section>
+                </div> -->
                 
-                <section>
-                    <h2 class="section-title">Experience</h2>
+<section>
+    <h2 class="section-title">Experience</h2>
 
-                    <div class="subsection-title">
-                        <span>Teaching Assistant</span>
-                        <span class="dates">Jan 2021 – Apr 2023</span>
-                    </div>
-                    <div class="under-subsection-title">McMaster University</div>
-                    <ul>
-                        <li>Courses: COMPSCI 2DB3 (Databases), 1XC3 (Computer Science Practice); SFWRENG 2C03 (Data Structures &amp; Algorithms)</li>
-                        <li>Automated grading workflows by refactoring Python/Bash grading scripts, reducing evaluation turnaround time for 100+ students.</li>
-                        <li>Led bi-weekly tutorials and practical labs for 60+ undergraduate students, breaking down core concepts in database design, data structures, and algorithm complexity.</li>
-                        <li>Mentored students in technical troubleshooting, debugging, and efficient algorithm implementation during dedicated code-review sessions.</li>
-                    </ul>
+    <div class="entry-item">
+        <div class="entry-date">2021.01 – 2023.04</div>
+        <div class="entry-content">
+            <div class="entry-title">Teaching Assistant</div>
+            <div class="entry-subtitle">McMaster University (Canada, remote)</div>
+            <ul>
+                <li>COMPSCI 2DB3 (Databases), 1XC3 (Computer Science Practice); SFWRENG 2C03 (Data Structures &amp; Algorithms)</li>
+            </ul>
+        </div>
+    </div>
 
-                    <div class="subsection-title">
-                        <span>Teaching Assistant (Volunteer)</span>
-                        <span class="dates">Nov 2018 – Feb 2019</span>
-                    </div>
-                    <div class="under-subsection-title">Blyth Academy Mississauga</div>
-                    <ul>
-                        <li>Grade 12 Calculus and Vectors (MCV4U)</li>
-                        <li>Guided a class of 20+ students through advanced calculus principles, vector components, and algebraic problem-solving strategies.</li>
-                    </ul>
-                </section>
+    <div class="entry-item">
+        <div class="entry-date">2018.11 – 2019.02</div>
+        <div class="entry-content">
+            <div class="entry-title">Teaching Assistant (Volunteer)</div>
+            <div class="entry-subtitle">Blyth Academy Mississauga (Canada)</div>
+            <ul>
+                <li>Grade 12 Calculus and Vectors (MCV4U)</li>
+                </ul>
+        </div>
+    </div>
+</section>
 
-                <section>
-                    <h2 class="section-title">Education</h2>
+<section>
+    <h2 class="section-title">Education</h2>
 
-                    <div class="subsection-title">
-                        <span>Bachelor of Computer Science</span>
-                        <span class="dates">2019 – Present (Expected Aug 2026)</span>
-                    </div>
-                    <div class="under-subsection-title">McMaster University &amp; Stockholm University · Cumulative GPA: 11.7 / 12.0</div>
-                    <ul>
-                        <li>Focus: Software Engineering, Data Structures &amp; Algorithms, Database Systems</li>
-                        <li>Note: Paused studies from 2022–2024 for full-time language acquisition in Europe.</li>
-                    </ul>
+    <div class="entry-item">
+        <div class="entry-date">2025 – 2026</div>
+        <div class="entry-content">
+            <div class="entry-title">Bachelor of Computer Science</div>
+            <div class="entry-subtitle">Stockholm University</div>
+            <ul>
+                <li>Bachelor Thesis: Random Walks and Mixing Times on Graphs</li>
+            </ul>
+        </div>
+    </div>
 
-                    <div class="subsection-title">
-                        <span>German &amp; Swedish Language Certifications</span>
-                        <span class="dates">2022 – 2024</span>
-                    </div>
-                    <div class="under-subsection-title">Lund University · University of Stuttgart · Goethe-Institut</div>
-                    <ul>
-                        <li>Intensive acquisition of German and Swedish to professional C1 fluency.</li>
-                    </ul>
-                </section>
+    <div class="entry-item">
+        <div class="entry-date">2022 – 2024</div>
+        <div class="entry-content">
+            <div class="entry-title">German &amp; Swedish Language Study</div>
+            <div class="entry-subtitle">Lund University · University of Stuttgart · Goethe-Institut</div>
+        </div>
+    </div>
 
-                <section>
-                    <h2 class="section-title">Awards</h2>
-                    <ul>
-                        <li>McMaster University Dean’s Honour List (2020, 2021)</li>
-                        <li>McMaster Entrance Scholarship CA$2500</li>
-                        <li>Canadian Senior Mathematics Contest — School Champion &amp; Distinction (2018)</li>
-                    </ul>
-                </section>
+    <div class="entry-item">
+        <div class="entry-date">2019 – 2022</div>
+        <div class="entry-content">
+            <div class="entry-title">Bachelor of Computer Science</div>
+            <div class="entry-subtitle">McMaster University</div>
+            <ul>
+                <li>Cumulative GPA: 11.7 / 12.0</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2018 – 2019</div>
+        <div class="entry-content">
+            <div class="entry-title">Ontario Secondary School Diploma</div>
+            <div class="entry-subtitle">Blyth Academy Mississauga</div>
+            <ul>
+                <li>Overall grade: 90.625/100</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2016 – 2018</div>
+        <div class="entry-content">
+            <div class="entry-title">Senior High 1, 2</div>
+            <div class="entry-subtitle">High School Affiliated to Yangzhou University</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Awards</h2>
+    <div class="entry-item">
+        <div class="entry-date">2021</div>
+        <div class="entry-content">
+            <div>McMaster University Dean’s Honour List</div>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2020</div>
+        <div class="entry-content">
+            <div>McMaster University Dean’s Honour List</div>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2019</div>
+        <div class="entry-content">
+            <div>McMaster Entrance Scholarship, CA$ 2,500</div>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2019</div>
+        <div class="entry-content">
+            <div>Ontario Scholar</div>
+        </div>
+    </div>
+
+    <div class="entry-item">
+        <div class="entry-date">2018</div>
+        <div class="entry-content">
+            <div>Canadian Senior Mathematics Contest, School Champion &amp; Distinction</div>
+        </div>
+    </div>
+</section>
 
                 <section>
                     <h2 class="section-title">Languages</h2>
